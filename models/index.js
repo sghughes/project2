@@ -36,6 +36,9 @@ Object.keys(db).forEach(function(modelName) {
   }
 });
 
+db.Item.belongsTo(db.ItemType, { as: 'type' });
+db.Item.hasOne(db.Listing, { as: 'item' });
+
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
