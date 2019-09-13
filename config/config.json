@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "root",
-    "password": "Muir!2017",
+    "password": "",
     "database": "ogs_db",
     "host": "localhost",
     "dialect": "mysql"
