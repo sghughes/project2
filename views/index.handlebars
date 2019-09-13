@@ -1,4 +1,4 @@
-<div id="home">
+{{!-- <div id="home">
   <div class="container">
     <div class="row">
       <div class="col-8 offset-2">
@@ -27,7 +27,37 @@
       </div>
     </div>
   </div>
-</div>
+</div> --}}
+
+<nav class="navbar navbar-expand-lg navbar-light sticky-top" id="stickyNav">
+    <a class="navbar-brand" href="/index"><img src="assets/images/logo.png" style="width:auto;height:35px" id="logo"></a>
+    <div class="collapse navbar-collapse " id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="/items">Buy <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="/form">Sell <span class="sr-only">(current)</span></a>
+        </li>
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    </div>
+  </nav>
+
+  <div id="homepage">
+    <div class="jumbotron big-banner ">
+      <br>
+        <h1 class="display-4 text-center">ONLINE GARAGE SALE</h1>
+        <p class="lead text-center">Find a bargain in your neighborhood</p>
+        <div class="d-flex justify-content-center">
+          <button type="button" class="btn btn-light buyButton"><a href="/items">Buy</a></button>        
+          <button type="button" class="btn btn-light sellButton"><a href="/form">Sell</a></button>
+        </div>          
+      </div>
+  </div>
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="/js/index.js"></script>

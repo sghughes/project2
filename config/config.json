@@ -1,8 +1,8 @@
 {
   "development": {
     "username": "root",
-    "password": null,
-    "database": "exampledb",
+    "password": "Muir!2017",
+    "database": "ogs_db",
     "host": "localhost",
     "dialect": "mysql"
   },
