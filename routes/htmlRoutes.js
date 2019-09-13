@@ -3,19 +3,38 @@ var db = require("../models");
 module.exports = function(app) {
   // Load index page
   app.get("/", function(req, res) {
-    db.Example.findAll({}).then(function(dbExamples) {
+    db.Item.findAll({}).then(function(ogs_db) {
       res.render("index", {
         msg: "Welcome!",
-        examples: dbExamples
+        examples: ogs_db
+      });
+    });
+  });
+
+  app.get("/form", function(req, res) {
+    db.Item.findAll({}).then(function(ogs_db) {
+      res.render("form", {
+        msg: "Welcome!",
+        examples: ogs_db
+      });
+    });
+  });
+
+  
+  app.get("/items", function(req, res) {
+    db.Item.findAll({}).then(function(ogs_db) {
+      res.render("items", {
+        msg: "Welcome!",
+        examples: ogs_db
       });
     });
   });
 
   // Load example page and pass in an example by id
   app.get("/example/:id", function(req, res) {
-    db.Example.findOne({ where: { id: req.params.id } }).then(function(dbExample) {
+    db.Example.findOne({ where: { id: req.params.id } }).then(function(ogs_db) {
       res.render("example", {
-        example: dbExample
+        example: ogs_db
       });
     });
   });
