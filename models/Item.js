@@ -9,5 +9,9 @@ module.exports = function(sequelize, DataTypes) {
         condition: DataTypes.STRING
     });
 
+    Item.associate = models => {
+        Item.hasOne(models.Listing);
+    };
+
     return Item;
 };
