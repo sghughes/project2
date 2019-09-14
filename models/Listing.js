@@ -1,5 +1,16 @@
 module.exports = function(sequelize, DataTypes) {
     var Listing = sequelize.define('Listing', {
+        title: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        description: DataTypes.TEXT,
+        image: DataTypes.STRING,
+        item: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        condition: DataTypes.STRING,
         price: {
             type: DataTypes.FLOAT,
             defaultValue: 0

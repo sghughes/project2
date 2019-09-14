@@ -26,11 +26,7 @@ module.exports = function(sequelize, DataTypes) {
         }
     );
 
-    ItemType.associate = models => {
-        ItemType.hasOne(models.Item, {
-            as: 'Type'
-        });
-    };
+    ItemType.associate = models => ItemType.hasOne(models.Listing);
 
     return ItemType;
 };
