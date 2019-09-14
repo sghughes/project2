@@ -31,8 +31,20 @@
 
           <form>
             <div class="form-group">
-              <label for="formGroupExampleInput">Zip code</label>
-              <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Zip Code">
+              <label for="exampleFormControlSelect1">Distance</label>
+              <select class="form-control" id="exampleFormControlSelect1">
+                <option>< 10 miles</option>
+                <option>> 10 miles</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="exampleFormControlSelect1">Price</label>
+              <select class="form-control" id="exampleFormControlSelect1">
+                <option>free ($0)</option>
+                <option><$10</option>
+                <option>>$10</option>
+              </select>
             </div>
 
             <div class="form-group">
@@ -48,9 +60,19 @@
               <select class="form-control" id="exampleFormControlSelect1">
                 <option>Tops</option>
                 <option>Pants</option>
-                <option>Jackets</option>
                 <option>Sweaters</option>
                 <option>Dresses</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="exampleFormControlSelect1">Size</label>
+              <select class="form-control" id="exampleFormControlSelect1">
+                <option>XS</option>
+                <option>S</option>
+                <option>M</option>
+                <option>L</option>
+                <option>XL</option>
               </select>
             </div>
 
@@ -58,15 +80,27 @@
               <label for="exampleFormControlSelect2">Color</label>
               <select multiple class="form-control" id="exampleFormControlSelect2">
                 <option>Black</option>
-                <option>Blue</option>
                 <option>White</option>
+                <option>Blue</option>
+                <option>Red</option>
                 <option>Green</option>
+                <option>Yellow</option>
+                <option>Brown</option>
+                <option>Purple</option>
+                <option>Orange</option>
+                <option>Other</option>
               </select>
             </div>
 
             <div class="form-group">
-              <label for="exampleFormControlTextarea1">Item Description (optional)</label>
-              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+              <label for="exampleFormControlSelect2">Condition</label>
+              <select multiple class="form-control" id="exampleFormControlSelect2">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+              </select>
             </div>
 
             <button type="submit" class="btn btn-primary">Submit</button>
