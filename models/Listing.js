@@ -11,6 +11,7 @@ module.exports = function(sequelize, DataTypes) {
             allowNull: false
         },
         condition: DataTypes.STRING,
+        properties: DataTypes.JSON,
         price: {
             type: DataTypes.FLOAT,
             defaultValue: 0

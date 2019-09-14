@@ -1,30 +1,14 @@
 module.exports = function(sequelize, DataTypes) {
-    var ItemType = sequelize.define(
-        'ItemType',
-        {
-            name: {
-                type: DataTypes.STRING,
-                allowNull: false
-            },
-            category: {
-                type: DataTypes.STRING,
-                allowNull: false
-            },
-            properties: {
-                type: DataTypes.JSON,
-                allowNull: false
-            }
+    var ItemType = sequelize.define('ItemType', {
+        name: {
+            type: DataTypes.STRING,
+            primaryKey: true
         },
-        {
-            indexes: [
-                {
-                    unique: true,
-                    name: 'NAME_CATEGORY',
-                    fields: ['name', 'category']
-                }
-            ]
+        properties: {
+            type: DataTypes.JSON,
+            allowNull: false
         }
-    );
+    });
 
     ItemType.associate = models => ItemType.hasOne(models.Listing);
 
