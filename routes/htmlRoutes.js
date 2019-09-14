@@ -3,7 +3,7 @@ var db = require("../models");
 module.exports = function(app) {
   // Load index page
   app.get("/", function(req, res) {
-    db.Item.findAll({}).then(function(ogs_db) {
+    db.ItemType.findAll({}).then(function(ogs_db) {
       res.render("index", {
         msg: "Welcome!",
         examples: ogs_db
@@ -12,7 +12,7 @@ module.exports = function(app) {
   });
 
   app.get("/form", function(req, res) {
-    db.Item.findAll({}).then(function(ogs_db) {
+    db.ItemType.findAll({}).then(function(ogs_db) {
       res.render("form", {
         msg: "Welcome!",
         examples: ogs_db
@@ -22,7 +22,7 @@ module.exports = function(app) {
 
   
   app.get("/items", function(req, res) {
-    db.Item.findAll({}).then(function(ogs_db) {
+    db.ItemType.findAll({}).then(function(ogs_db) {
       res.render("items", {
         msg: "Welcome!",
         examples: ogs_db
