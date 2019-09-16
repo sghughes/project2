@@ -29,35 +29,41 @@
         <div class="col-md-2">
           <h3 class="text-center">Filter</h3>
 
-          <form>
+          <form id="filters">
             <div class="form-group">
-              <label for="exampleFormControlSelect1">Distance</label>
-              <select class="form-control" id="exampleFormControlSelect1">
-                <option>&lt; 10 miles</option>
-                <option>&gt; 10 miles</option>
-              </select>
+              <label for="range-distance">Distance (Miles)</label>
+              <input type="range" class="custom-range" id="range-distance" value="10">
+              <span id="range-output"></span>
+            </div>
+
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" id="is-free">
+                <label class="form-check-label" for="is-free">
+                    Free Only
+                </label>
+            </div>
+
+            <div id="input-prices" class="form-group">
+                <label for="min-price">Min Price ($)</label>
+                <input class="form-control" type="number" name="min-price" id="min-price" value="0">
+
+                <label for="max-price">Max Price ($)</label>
+                <input class="form-control" type="number" name="max-price" id="max-price" value="100">
             </div>
 
             <div class="form-group">
-              <label for="exampleFormControlSelect1">Price</label>
-              <select class="form-control" id="exampleFormControlSelect1">
-                <option>free ($0)</option>
-                <option>&lt;$10</option>
-                <option>&lt;$10</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label for="exampleFormControlSelect1">Mens or Womens</label>
-              <select class="form-control" id="exampleFormControlSelect1">
+              <label for="select-gender">Mens or Womens</label>
+              <select class="form-control" id="select-gender">
+                <option selected>All</option>
                 <option>Mens</option>
                 <option>Womens</option>
               </select>
             </div>
 
             <div class="form-group">
-              <label for="exampleFormControlSelect1">Clothing Type</label>
-              <select class="form-control" id="exampleFormControlSelect1">
+              <label for="select-type">Clothing Type</label>
+              <select class="form-control" id="select-type">
+                <option>All</option>
                 <option>Tops</option>
                 <option>Pants</option>
                 <option>Sweaters</option>
@@ -66,8 +72,9 @@
             </div>
 
             <div class="form-group">
-              <label for="exampleFormControlSelect1">Size</label>
-              <select class="form-control" id="exampleFormControlSelect1">
+              <label for="select-size">Size</label>
+              <select class="form-control" id="select-size">
+                <option>All</option>
                 <option>XS</option>
                 <option>S</option>
                 <option>M</option>
@@ -77,8 +84,9 @@
             </div>
 
             <div class="form-group">
-              <label for="exampleFormControlSelect2">Color</label>
-              <select multiple class="form-control" id="exampleFormControlSelect2">
+              <label for="select-color">Color</label>
+              <select class="form-control" id="select-color">
+                <option>All</option>
                 <option>Black</option>
                 <option>White</option>
                 <option>Blue</option>
@@ -93,25 +101,22 @@
             </div>
 
             <div class="form-group">
-              <label for="exampleFormControlSelect2">Condition</label>
-              <select multiple class="form-control" id="exampleFormControlSelect2">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
+              <label for="select-condition">Condition</label>
+              <select class="form-control" id="select-condition">
+                <option value="0">All</option>
+                <option value="1">New</option>
+                <option value="2">Great</option>
+                <option value="3">Used</option>
+                <option value="4">Worn</option>
+                <option value="5">Damaged</option>
               </select>
             </div>
 
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" id="btn-filter" class="btn btn-primary w-100">Filter</button>
+            <br>
+            <button type="submit" id="btn-reset" class="btn btn-danger w-100 mt-2">Reset</button>
           </form>
 
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-            <label class="form-check-label" for="defaultCheck1">
-              Default checkbox
-            </label>
-          </div>
         </div>
 
         <div class="col-md-10">
@@ -163,9 +168,10 @@
             </div>
           </div>
 
-
           </div>
         </div>
       </div>
     </div>
   </div>
+
+  <script src="./js/filters.js"></script>
