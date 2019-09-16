@@ -35,6 +35,15 @@ body {
     margin: 3px;
 }
 
+.buyButton, .sellButton {
+  margin: 3px;
+}
+
+#map {
+  height: 500px;
+  width: 100%;
+}
+
 .disabledinput {
     pointer-events: none;
     opacity: 0.4;
