@@ -45,3 +45,8 @@ body {
     height: 20vh;
     object-fit: cover;
 }
+
+.disabledinput {
+    pointer-events: none;
+    opacity: 0.4;
+}
