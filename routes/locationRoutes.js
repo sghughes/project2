@@ -1,7 +1,7 @@
 var db = require('../models');
 
 module.exports = function(app) {
-    app.get('/location/:zipcode', (req, res) => {
+    app.get('/api/locations/:zipcode', (req, res) => {
         // Check DB for location info for requested zip
         const zipcode = req.params.zipcode;
         db.Location.findOne({
