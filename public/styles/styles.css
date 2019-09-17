@@ -1,21 +1,20 @@
 .list-group-item {
-  line-height: 2.5;
+    line-height: 2.5;
 }
 
 body {
-  font-family: 'Source Sans Pro', sans-serif;
+    font-family: 'Source Sans Pro', sans-serif;
 }
 .big-banner {
-  background-image: url(../assets/images/jumbo4.jpg);
-  /* background-size: 100%; */
-  background-repeat:no-repeat;
-  background-size: cover;
-background-position: center;
-color: #fff;
-font-weight: bolder;
-/* font-family: 'Source Sans Pro', sans-serif; */
-font-family: 'Shadows Into Light', cursive;
-
+    background-image: url(../assets/images/jumbo4.jpg);
+    /* background-size: 100%; */
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    font-weight: bolder;
+    /* font-family: 'Source Sans Pro', sans-serif; */
+    font-family: 'Shadows Into Light', cursive;
 }
 
 /* #logo {
@@ -27,15 +26,22 @@ font-family: 'Shadows Into Light', cursive;
 }
 
 #saleItem {
-  /* display: inline-block; */
-  margin: 5px;
+    /* display: inline-block; */
+    margin: 5px;
 }
 
-.buyButton, .sellButton {
-  margin: 3px;
+.buyButton,
+.sellButton {
+    margin: 3px;
 }
 
 #map {
-  height: 500px;
-  width: 100%;
+    height: 500px;
+    width: 100%;
+}
+
+.card-img-top {
+    width: 100%;
+    height: 20vh;
+    object-fit: cover;
 }
