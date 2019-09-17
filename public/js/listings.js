@@ -3,11 +3,11 @@ const Filters = {
     distance: 10, // 0 = Any distance
     minPrice: 0.0,
     maxPrice: 100.0,
-    condition: 0,
-    gender: 'ALL',
-    type: 'ALL',
-    size: 'ALL',
-    color: 'ALL',
+    itemQuality: 0,
+    gender: 'all',
+    type: 'all',
+    size: 'all',
+    color: 'all',
     freeOnly: false
 };
 
@@ -16,11 +16,11 @@ function resetFilters() {
     Filters.distance = 10;
     Filters.minPrice = 0.0;
     Filters.maxPrice = 100.0;
-    Filters.condition = 0;
-    Filters.gender = 'ALL';
-    Filters.type = 'ALL';
-    Filters.size = 'ALL';
-    Filters.color = 'ALL';
+    Filters.itemQuality = 0;
+    Filters.gender = 'all';
+    Filters.type = 'all';
+    Filters.size = 'all';
+    Filters.color = 'all';
     Filters.freeOnly = false;
 }
 
@@ -134,31 +134,31 @@ document.addEventListener('DOMContentLoaded', () => {
     // Update gender selection
     const selectedGender = document.querySelector('#select-gender');
     selectedGender.addEventListener('change', function() {
-        Filters.gender = this.value;
+        Filters.gender = this.value.toLowerCase();
     });
 
     // Update item type
     const selectedType = document.querySelector('#select-type');
     selectedType.addEventListener('change', function() {
-        Filters.type = this.value;
+        Filters.type = this.value.toLowerCase();
     });
 
     // Update size selection
     const selectedSize = document.querySelector('#select-size');
     selectedSize.addEventListener('change', function() {
-        Filters.size = this.value;
+        Filters.size = this.value.toLowerCase();
     });
 
     // Update color selection
     const selectedColor = document.querySelector('#select-color');
     selectedColor.addEventListener('change', function() {
-        Filters.color = this.value;
+        Filters.color = this.value.toLowerCase();
     });
 
-    // Update condition selection
-    const selectedCond = document.querySelector('#select-condition');
+    // Update item quality selection
+    const selectedCond = document.querySelector('#select-quality');
     selectedCond.addEventListener('change', function() {
-        Filters.condition = parseInt(this.value);
+        Filters.itemQuality = parseInt(this.value);
     });
 
     // Filter button click

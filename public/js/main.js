@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
             this.dispatchEvent(searchEvent);
 
         } catch (err) {
-            console.error('ERROR searching for listings', err);
+            console.log('ERROR searching for listings', err);
         }
     });
 });

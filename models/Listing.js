@@ -6,7 +6,7 @@ module.exports = function(sequelize, DataTypes) {
         },
         description: DataTypes.TEXT,
         image: DataTypes.STRING,
-        item_quality: DataTypes.STRING,
+        itemQuality: DataTypes.STRING,
         properties: DataTypes.JSON,
         price: {
             type: DataTypes.FLOAT,
