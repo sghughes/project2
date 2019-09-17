@@ -24,7 +24,7 @@ module.exports = function(app) {
             res.json(data);
           });
       });
-    
+
 
     // POST routes
     app.post('/api/listings', function(req, res) {
@@ -36,13 +36,15 @@ module.exports = function(app) {
 
         const data = req.body;
 
+        const itemProps = JSON.parse(data.properties);
+
         db.Listing.create({
             title: data.title,
             description: data.description,
             image: data.image,
             item: data.item,
             condition: data.condition,
-            properties: data.properties,
+            properties: itemProps,
             price: data.price,
             isFree: data.isFree || parseFloat(data.price) == 0,
             contactZip: data.contactZip,
