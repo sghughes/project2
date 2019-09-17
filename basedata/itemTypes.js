@@ -21,7 +21,7 @@ const CLOTHING = {
         ['size', SIZES],
         ['category', CATEGORIES],
         ['color', COLORS],
-        ['gender', ['mens', 'womens']]
+        ['gender', ['na','mens', 'womens']]
     ])
 };
 
