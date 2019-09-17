@@ -6,11 +6,7 @@ module.exports = function(sequelize, DataTypes) {
         },
         description: DataTypes.TEXT,
         image: DataTypes.STRING,
-        item: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        condition: DataTypes.STRING,
+        item_quality: DataTypes.STRING,
         properties: DataTypes.JSON,
         price: {
             type: DataTypes.FLOAT,
