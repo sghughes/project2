@@ -20,6 +20,15 @@ module.exports = function(app) {
     });
   });
 
+  app.get("/manage", function(req, res) {
+    db.ItemType.findAll({}).then(function(ogs_db) {
+      res.render("manage", {
+        msg: "Welcome!",
+        examples: ogs_db
+      });
+    });
+  });
+
   
   app.get("/items", function(req, res) {
     db.ItemType.findAll({}).then(function(ogs_db) {

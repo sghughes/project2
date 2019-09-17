@@ -1,99 +1,49 @@
-// Get references to page elements
-var $exampleText = $("#example-text");
-var $exampleDescription = $("#example-description");
-var $submitBtn = $("#submit");
-var $exampleList = $("#example-list");
 
-// The API object contains methods for each kind of request we'll make
-var API = {
-  saveExample: function(example) {
-    return $.ajax({
-      headers: {
-        "Content-Type": "application/json"
-      },
-      type: "POST",
-      url: "api/examples",
-      data: JSON.stringify(example)
+$(document).ready(function() {
+  // Adding an event listener for when the form is submitted
+  $(".newItem").on("submit", function handleFormSubmit(event) {
+    event.preventDefault();
+    // Constructing a newPost object to hand to the database
+    var newPost = {
+      title: $("#newItemTitle").val().trim(),
+      description: $("#newItemDescription").val().trim(),
+      image: $('#newItemImageUrl').val().trim(),
+      item: $("#newItemClothingType").val().trim(),
+      condition: $("#newItemCondition").val(),
+      properties: {},
+      price: $("#newItemPrice").val().trim(),
+      isFree: 0,
+      contactZip: $("#newItemZipCode").val().trim(),
+      contactEmail: $("#email").val().trim(),
+      contactPhone: $("#phone").val().trim(),
+    };
+    console.log(newPost);
+    submitPost(newPost);    
+  // Submits a new post and brings user to blog page upon completion
+  function submitPost(Listing) {
+    $.post("/api/listings/", Listing, function() {
+      window.location.href = "/form";
+      console.log("new post is done")
     });
-  },
-  getExamples: function() {
-    return $.ajax({
-      url: "api/examples",
-      type: "GET"
-    });
-  },
-  deleteExample: function(id) {
-    return $.ajax({
-      url: "api/examples/" + id,
-      type: "DELETE"
-    });
-  }
-};
-
-// refreshExamples gets new examples from the db and repopulates the list
-var refreshExamples = function() {
-  API.getExamples().then(function(data) {
-    var $examples = data.map(function(example) {
-      var $a = $("<a>")
-        .text(example.text)
-        .attr("href", "/example/" + example.id);
-
-      var $li = $("<li>")
-        .attr({
-          class: "list-group-item",
-          "data-id": example.id
-        })
-        .append($a);
-
-      var $button = $("<button>")
-        .addClass("btn btn-danger float-right delete")
-        .text("ｘ");
-
-      $li.append($button);
-
-      return $li;
-    });
-
-    $exampleList.empty();
-    $exampleList.append($examples);
-  });
-};
-
-// handleFormSubmit is called whenever we submit a new example
-// Save the new example to the db and refresh the list
-var handleFormSubmit = function(event) {
-  event.preventDefault();
-
-  var example = {
-    text: $exampleText.val().trim(),
-    description: $exampleDescription.val().trim()
   };
 
-  if (!(example.text && example.description)) {
-    alert("You must enter an example text and description!");
-    return;
+  });
+
+  $("#manageButton").on("click", handlePostDelete);
+  function handlePostDelete(){
+    var currentPost = $("#itemPostingID").val().trim();
+    console.log(currentPost);
+    deletePost(currentPost);
+  };
+  //need to add if statement to verify that id exists and alert if it does not
+  function deletePost(id) {
+    $.ajax({
+      method: "DELETE",
+      url: "/api/listings/" + id
+    })
+    .then(function(){
+      console.log('this post has been deleted')
+      alert('Thanks. Your post has been removed.')
+    })
   }
-
-  API.saveExample(example).then(function() {
-    refreshExamples();
-  });
-
-  $exampleText.val("");
-  $exampleDescription.val("");
-};
-
-// handleDeleteBtnClick is called when an example's delete button is clicked
-// Remove the example from the db and refresh the list
-var handleDeleteBtnClick = function() {
-  var idToDelete = $(this)
-    .parent()
-    .attr("data-id");
-
-  API.deleteExample(idToDelete).then(function() {
-    refreshExamples();
-  });
-};
-
-// Add event listeners to the submit and delete buttons
-$submitBtn.on("click", handleFormSubmit);
-$exampleList.on("click", ".delete", handleDeleteBtnClick);
+});

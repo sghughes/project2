@@ -10,7 +10,9 @@ module.exports = function(sequelize, DataTypes) {
         }
     });
 
-    ItemType.associate = models => ItemType.hasOne(models.Listing);
+    ItemType.associate = models => ItemType.hasOne(models.Listing, {
+        defaultValue: 'clothing'
+    });
 
     return ItemType;
 };
