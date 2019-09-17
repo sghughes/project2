@@ -25,11 +25,6 @@ body {
     background-color: #fff;
 }
 
-#saleItem {
-    /* display: inline-block; */
-    margin: 5px;
-}
-
 .buyButton,
 .sellButton {
     margin: 3px;
@@ -38,6 +33,11 @@ body {
 #map {
     height: 500px;
     width: 100%;
+}
+
+.card {
+    width: 16rem;
+    margin: 5px;
 }
 
 .card-img-top {

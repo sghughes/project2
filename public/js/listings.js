@@ -24,6 +24,67 @@ function resetFilters() {
     Filters.freeOnly = false;
 }
 
+// Creates a Listing card
+function createListingCard(listing) {
+
+    // Main Listing card div element
+    const card = document.createElement('div');
+    card.classList.add('card');
+
+    // Listing image element
+    const image = document.createElement('img');
+    image.classList.add('card-img-top');
+    image.setAttribute('src', listing.image);
+    image.setAttribute('alt', 'listing image');
+
+    // Card body div element
+    const body = document.createElement('div');
+    body.classList.add('card-body');
+
+    // Card title element
+    const title = document.createElement('h5');
+    title.classList.add('card-title');
+    title.innerText = listing.title;
+
+    // Card text element
+    const text = document.createElement('p');
+    text.classList.add('card-text');
+    text.innerText = listing.description; // TODO - determine text length limit
+
+    // Card Listing link element
+    const link = document.createElement('a');
+    link.classList.add('btn', 'btn-primary');
+    link.innerText = 'Details';
+    link.setAttribute('href', `/listings/${listing.id}`);
+
+    // Construct and return final listing card from elements
+    body.append(title, text, link);
+    card.append(image, body);
+
+    return card;
+}
+
+// Updates the displayed search results using the supplied listings
+function updateResults(listings) {
+    // Get search results container.
+    const container = document.querySelector('#search-results');
+    if (!container) {
+        return;
+    }
+
+    // Clear search results container before updating.
+    container.innerHTML = '';
+
+    // Return early if no listings found.
+    if (!listings || listings.count === 0) {
+        return;
+    }
+
+    // Create cards for each listing, then append to search results container.
+    const listingCards = listings.map(listing => createListingCard(listing));
+    listingCards.forEach(card => container.appendChild(card));
+}
+
 // Add event listeners and perform necessary initializtion
 // once page content is loaded.
 document.addEventListener('DOMContentLoaded', () => {
@@ -119,6 +180,13 @@ document.addEventListener('DOMContentLoaded', () => {
         filtersForm.reset();
         // Make sure price input enabled
         priceInputs.classList.remove('disabledinput');
+    });
+
+    // Listen for listing search events. Update search results when invoked.
+    this.addEventListener('ListingSearch', evt => {
+        if (evt.detail) {
+            updateResults(evt.detail);
+        }
     });
 });
 
