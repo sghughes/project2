@@ -5,11 +5,11 @@ module.exports = function(sequelize, DataTypes) {
             primaryKey: true
         },
         longitude: {
-            type: DataTypes.DECIMAL,
+            type: DataTypes.DOUBLE,
             allowNull: false
         },
         latitude: {
-            type: DataTypes.DECIMAL,
+            type: DataTypes.DOUBLE,
             allowNull: false
         }
     });
