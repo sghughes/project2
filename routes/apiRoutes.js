@@ -1,5 +1,6 @@
 const db = require('../models');
 const Op = require('sequelize').Op;
+const crypto = require('crypto');
 
 function getSearchCriteria(params) {
     // Init with search term and active
@@ -45,6 +46,11 @@ function getSearchCriteria(params) {
     }
 
     return searchCriteria;
+}
+
+// Generates a random 8 character string
+function getRandomString() {
+    return crypto.randomBytes(4).toString('hex').toUpperCase();
 }
 
 module.exports = function(app) {
