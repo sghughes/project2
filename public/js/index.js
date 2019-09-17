@@ -9,8 +9,13 @@ $(document).ready(function() {
       description: $("#newItemDescription").val().trim(),
       image: $('#newItemImageUrl').val().trim(),
       item: $("#newItemClothingType").val().trim(),
-      condition: $("#newItemCondition").val(),
-      properties: {},
+      item_quality: $("#newItemCondition").val(),
+      properties: {
+        size: $('#newItemSize').val(),
+        category: 'clothing',
+        color: $('#newItemColor').val(),
+        gender: $('#newItemGender').val()
+      },
       price: $("#newItemPrice").val().trim(),
       isFree: 0,
       contactZip: $("#newItemZipCode").val().trim(),
