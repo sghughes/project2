@@ -35,13 +35,15 @@ body {
     margin: 3px;
 }
 
-.buyButton, .sellButton {
-  margin: 3px;
+#map {
+    height: 500px;
+    width: 100%;
 }
 
-#map {
-  height: 500px;
-  width: 100%;
+.card-img-top {
+    width: 100%;
+    height: 20vh;
+    object-fit: cover;
 }
 
 .disabledinput {
