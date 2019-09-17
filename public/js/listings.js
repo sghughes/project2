@@ -131,7 +131,7 @@ function initMap() {
     var map = new google.maps.Map(document.getElementById('map'), {
         center: myLatLng,
         zoom: 11,
-        styles: [           
+        styles: [
             // **********************Sin City theme**********************
             {
                 "featureType": "all",
@@ -399,7 +399,7 @@ function initMap() {
                         "lightness": 17
                     }
                 ]
-            }, 
+            },
              // **********************Dark Theme**********************
             // { elementType: 'geometry', stylers: [{ color: '#242f3e' }] },
             // { elementType: 'labels.text.stroke', stylers: [{ color: '#242f3e' }] },
