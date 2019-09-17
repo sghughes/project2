@@ -9,6 +9,8 @@ module.exports = function(app) {
     });
 
     app.get('/api/listings', function(req, res) {
+        // TODO - consider supplied filter args on req.params
+
         db.Listing.findAll().then(function(data) {
             res.json(data);
         });
