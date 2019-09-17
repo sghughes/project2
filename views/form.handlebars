@@ -1,123 +1,121 @@
-  <nav class="navbar navbar-expand-lg navbar-light sticky-top" id="stickyNav">
-    <a class="navbar-brand" href="/"><img src="assets/images/logo.png" style="width:auto;height:35px" id="logo"></a>
-    <div class="collapse navbar-collapse " id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="/items">Buy <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item active">
-          <a class="nav-link" href="/form">Sell <span class="sr-only">(current)</span></a>
-        </li>
-      </ul>
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-      </form>
-    </div>
-  </nav>
+<nav class="navbar navbar-expand-lg navbar-light sticky-top" id="stickyNav">
+  <a class="navbar-brand" href="/"><img src="assets/images/logo.png" style="width:auto;height:35px" id="logo"></a>
+  <div class="collapse navbar-collapse " id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/items">Buy <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/form">Sell <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/manage">Manage <span class="sr-only">(current)</span></a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </div>
+</nav>
 
-  <div id="formPage">
-    <div class="jumbotron big-banner">
-      <br>
-      <h1 class="display-4 text-center">ONLINE GARAGE SALE!</h1>
-      <p class="lead text-center">Find a bargain in your neighborhood</p>
-    </div>
+<div id="formPage">
+  <div class="jumbotron big-banner">
+    <br>
+    <h1 class="display-4 text-center">ONLINE GARAGE SALE!</h1>
+    <p class="lead text-center">Find a bargain in your neighborhood</p>
+  </div>
 
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <h2 class="text-center">Sell Your Item!</h2>
-          <form>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h2 class="text-center">Sell Your Item!</h2>
+        <form class="newItem" action="/api/listings" method="POST">
+        
+          <div class="form-group">
+            <label for="exampleFormControlInput1">Email address</label>
+            <input type="email" class="form-control" id="email" placeholder="name@example.com" name="contactEmail">
+          </div>
 
-            <div class="form-group">
-              <label for="formGroupExampleInput">Name</label>
-              <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Name">
-            </div>
+          <div class="form-group">
+            <label for="exampleFormControlInput1">Phone Number</label>
+            <input type="phone" class="form-control" id="phone" placeholder="(555)555-5555" name="contactPhone">
+          </div>
 
-            <div class="form-group">
-              <label for="exampleFormControlInput1">Email address</label>
-              <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
-            </div>
+          <div class="form-group">
+            <label for="exampleFormControlInput1">Title</label>
+            <input type="title" class="form-control" id="newItemTitle" placeholder="Title" name="title">
+          </div>
 
-            <div class="form-group">
-              <label for="exampleFormControlInput1">Phone Number</label>
-              <input type="phone" class="form-control" id="exampleFormControlInput1" placeholder="(555)555-5555">
-            </div>
+          <div class="form-group">
+            <label for="formGroupExampleInput">Zip code</label>
+            <input type="text" class="form-control" id="newItemZipCode" placeholder="Zip Code" name="contactZip"> 
+          </div>
 
-            <div class="form-group">
-              <label for="exampleFormControlInput1">Title</label>
-              <input type="title" class="form-control" id="exampleFormControlInput1" placeholder="Title">
-            </div>
+          <div class="form-group">
+            <label for="formGroupExampleInput">Price</label>
+            <input type="text" class="form-control" id="newItemPrice" placeholder="Price" name="price">
+          </div>
 
-            <div class="form-group">
-              <label for="formGroupExampleInput">Zip code</label>
-              <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Zip Code">
-            </div>
+          <div class="form-group">
+            <label for="exampleFormControlSelect1">Mens or Womens</label>
+            <select class="form-control" id="newItemGender" >
+              <option>Mens</option>
+              <option>Womens</option>
+            </select>
+          </div>
 
-            <div class="form-group">
-              <label for="formGroupExampleInput">Price</label>
-              <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Price">
-            </div>
+          <div class="form-group">
+            <label for="exampleFormControlSelect1">Clothing Type</label>
+            <select class="form-control" id="newItemClothingType" name="item">
+                <option>Tops</option>
+                <option>Pants</option>
+                <option>Sweaters</option>
+                <option>Dresses</option>
+            </select>
+          </div>
 
-            <div class="form-group">
-              <label for="exampleFormControlSelect1">Mens or Womens</label>
-              <select class="form-control" id="exampleFormControlSelect1">
-                <option>Mens</option>
-                <option>Womens</option>
-              </select>
-            </div>
+          <div class="form-group">
+            <label for="exampleFormControlSelect2">Color</label>
+            <select multiple class="form-control" id="newItemColor">
+              <option>Black</option>
+              <option>White</option>
+              <option>Blue</option>
+              <option>Red</option>
+              <option>Green</option>
+              <option>Yellow</option>
+              <option>Brown</option>
+              <option>Purple</option>
+              <option>Orange</option>
+              <option>Other</option>
+            </select>
+          </div>
 
-            <div class="form-group">
-              <label for="exampleFormControlSelect1">Clothing Type</label>
-              <select class="form-control" id="exampleFormControlSelect1">
-                  <option>Tops</option>
-                  <option>Pants</option>
-                  <option>Sweaters</option>
-                  <option>Dresses</option>
-              </select>
-            </div>
+          <div class="form-group">
+            <label for="exampleFormControlSelect2">Condition</label>
+            <select multiple class="form-control" id="newItemCondition" name="condition">
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+            </select>
+          </div>
 
-            <div class="form-group">
-              <label for="exampleFormControlSelect2">Color</label>
-              <select multiple class="form-control" id="exampleFormControlSelect2">
-                <option>Black</option>
-                <option>White</option>
-                <option>Blue</option>
-                <option>Red</option>
-                <option>Green</option>
-                <option>Yellow</option>
-                <option>Brown</option>
-                <option>Purple</option>
-                <option>Orange</option>
-                <option>Other</option>
-              </select>
-            </div>
+          <div class="form-group">
+            <label for="exampleFormControlInput1">Image</label>
+            <input type="text" class="form-control" id="newItemImageUrl" placeholder="Image URL" name="image">
+          </div>
 
-            <div class="form-group">
-              <label for="exampleFormControlSelect2">Condition</label>
-              <select multiple class="form-control" id="exampleFormControlSelect2">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-              </select>
-            </div>
+          <div class="form-group">
+            <label for="exampleFormControlTextarea1">Item Description (optional)</label>
+            <textarea class="form-control" id="newItemDescription" rows="3" name="description"></textarea>
+          </div>
 
-            <div class="form-group">
-              <label for="exampleFormControlInput1">Image</label>
-              <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Image URL">
-            </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
 
-            <div class="form-group">
-              <label for="exampleFormControlTextarea1">Item Description (optional)</label>
-              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-            </div>
-
-            <button type="submit" class="btn btn-primary">Submit</button>
-
-          </form>
-        </div>
+        </form>
       </div>
     </div>
   </div>
+</div>
