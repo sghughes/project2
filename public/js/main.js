@@ -31,6 +31,17 @@ function getUserLocation() {
 
 // Open a prompt to get user zip code
 function promptForZip() {
+    // First check session storage
+    try {
+        location = JSON.parse(sessionStorage.getItem('location'));
+        if (location) {
+            // We already have the user's location, nothing more to do.
+            return;
+        }
+    } catch (err) {
+        console.log('Error parsing location data from session storage', err);
+    }
+
     // Prompt for valid zip code until given
     alertify
         .prompt()
