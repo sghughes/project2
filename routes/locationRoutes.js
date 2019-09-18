@@ -23,7 +23,8 @@ module.exports = function(app) {
         }).then(data => {
             // Return location data if found
             if (data) {
-                res.json(data);
+                res.status(200).json(data);
+                return;
             } else {
                 // TODO - this needs to call google maps api if not found, then add to Location table,
                 // then return new Location.
@@ -33,8 +34,10 @@ module.exports = function(app) {
                 .then(response => {
                     if (response.status !== 200) {
                         res.status(response.status);
+                        return;
                     } else if (response.json.results.length === 0) {
                         res.status(404).send(`Geocode lookup failed for zipcode ${zipcode}`);
+                        return;
                     }
 
                     // We found geocode data, now add to DB for future use, then return as json.

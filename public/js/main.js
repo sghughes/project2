@@ -43,11 +43,11 @@ function promptForZip() {
             movable: false,
             labels: { ok: 'Submit' },
             type: 'text',
-            keepOpen: false,
+            keepOpen: true,
             onok: async function(evt, value) {
+                this.keepOpen = true;
                 const input = parseInt(value.trim());
                 if (!input) {
-                    this.keepOpen = true;
                     alertify.error('Invalid zip code');
                     return;
                 }
@@ -55,7 +55,11 @@ function promptForZip() {
                 // Potentially valid zip, verify with api request.
                 try {
                     const response = await fetch(`/api/locations/${input}`);
+                    if (!response.ok) {
+                        throw new Error(response.statusText);
+                    }
                     const location = await response.json();
+
                     // Update session storage
                     sessionStorage.setItem(
                         'location',
@@ -65,10 +69,10 @@ function promptForZip() {
                     // Display success
                     this.keepOpen = false;
                     alertify.success('Thank you!');
+                    alertify.closeAll();
                 } catch (err) {
-                    alertify.error(
-                        err.message || 'Could not validate zip code.'
-                    );
+                    this.keepOpen = true;
+                    alertify.error(err.message);
                 }
             },
             oncancel: function() {
