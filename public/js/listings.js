@@ -1,195 +1,201 @@
-<nav class="navbar navbar-expand-lg navbar-light sticky-top" id="stickyNav">
-    <a class="navbar-brand" href="/"><img src="assets/images/logo.png" style="width:auto;height:35px" id="logo"></a>
-    <div class="collapse navbar-collapse " id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="/">Buy <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item active">
-          <a class="nav-link" href="/form">Sell <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item active">
-        <a class="nav-link" href="/manage">Manage <span class="sr-only">(current)</span></a>
-        </li>
-      </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
-    </div>
-  </nav>
+// Global object to store filter values. Set to default values.
+const Filters = {
+    distance: 10, // 0 = Any distance
+    minPrice: 0.0,
+    maxPrice: 100.0,
+    itemQuality: 0,
+    gender: 'all',
+    type: 'all',
+    size: 'all',
+    color: 'all',
+    freeOnly: false
+};
 
-  <div id="buyPage">
+// Resets Filters to default values
+function resetFilters() {
+    Filters.distance = 10;
+    Filters.minPrice = 0.0;
+    Filters.maxPrice = 100.0;
+    Filters.itemQuality = 0;
+    Filters.gender = 'all';
+    Filters.type = 'all';
+    Filters.size = 'all';
+    Filters.color = 'all';
+    Filters.freeOnly = false;
+}
 
-    <div class="jumbotron big-banner">
-      <br>
-      <h1 class="display-4 text-center">ONLINE GARAGE SALE</h1>
-      <p class="lead text-center">Find a bargain in your neighborhood</p>
-    </div>
+// Creates a Listing card
+function createListingCard(listing) {
 
-    <div class="container">
-      <div class="row">
-        <div class="col-md-2">
-          <h3 class="text-center">Filter</h3>
+    // Main Listing card div element
+    const card = document.createElement('div');
+    card.classList.add('card');
 
-          <form id="filters">
-            <div class="form-group">
-              <label for="range-distance">Distance (Miles)</label>
-              <input type="range" class="custom-range" id="range-distance" value="10">
-              <span id="range-output"></span>
-            </div>
+    // Listing image element
+    const image = document.createElement('img');
+    image.classList.add('card-img-top');
+    image.setAttribute('src', listing.image);
+    image.setAttribute('alt', 'listing image');
 
-            <div class="form-check mb-3">
-                <input class="form-check-input" type="checkbox" id="is-free">
-                <label class="form-check-label" for="is-free">
-                    Free Only
-                </label>
-            </div>
+    // Card body div element
+    const body = document.createElement('div');
+    body.classList.add('card-body');
 
-            <div id="input-prices" class="form-group">
-                <label for="min-price">Min Price ($)</label>
-                <input class="form-control" type="number" name="min-price" id="min-price" value="0">
+    // Card title element
+    const title = document.createElement('h5');
+    title.classList.add('card-title');
+    title.innerText = listing.title;
 
-                <label for="max-price">Max Price ($)</label>
-                <input class="form-control" type="number" name="max-price" id="max-price" value="100">
-            </div>
+    // Card text element
+    const text = document.createElement('p');
+    text.classList.add('card-text');
+    text.innerText = listing.description; // TODO - determine text length limit
 
-            <div class="form-group">
-              <label for="select-gender">Mens or Womens</label>
-              <select class="form-control" id="select-gender">
-                <option selected>All</option>
-                <option>Mens</option>
-                <option>Womens</option>
-              </select>
-            </div>
+    // Card Listing link element
+    const link = document.createElement('a');
+    link.classList.add('btn', 'btn-primary');
+    link.innerText = 'Details';
+    link.setAttribute('href', `/listings/${listing.id}`);
 
-            <div class="form-group">
-              <label for="select-type">Clothing Type</label>
-              <select class="form-control" id="select-type">
-                <option>All</option>
-                <option>Tops</option>
-                <option>Pants</option>
-                <option>Sweaters</option>
-                <option>Dresses</option>
-              </select>
-            </div>
+    // Construct and return final listing card from elements
+    body.append(title, text, link);
+    card.append(image, body);
 
-            <div class="form-group">
-              <label for="select-size">Size</label>
-              <select class="form-control" id="select-size">
-                <option>All</option>
-                <option>XS</option>
-                <option>S</option>
-                <option>M</option>
-                <option>L</option>
-                <option>XL</option>
-              </select>
-            </div>
+    return card;
+}
 
-            <div class="form-group">
-              <label for="select-color">Color</label>
-              <select class="form-control" id="select-color">
-                <option>All</option>
-                <option>Black</option>
-                <option>White</option>
-                <option>Blue</option>
-                <option>Red</option>
-                <option>Green</option>
-                <option>Yellow</option>
-                <option>Brown</option>
-                <option>Purple</option>
-                <option>Orange</option>
-                <option>Other</option>
-              </select>
-            </div>
+// Updates the displayed search results using the supplied listings
+function updateResults(listings) {
+    // Get search results container.
+    const container = document.querySelector('#search-results');
+    if (!container) {
+        return;
+    }
 
-            <div class="form-group">
-              <label for="select-condition">Condition</label>
-              <select class="form-control" id="select-condition">
-                <option value="0">All</option>
-                <option value="1">New</option>
-                <option value="2">Great</option>
-                <option value="3">Used</option>
-                <option value="4">Worn</option>
-                <option value="5">Damaged</option>
-              </select>
-            </div>
+    // Clear search results container before updating.
+    container.innerHTML = '';
 
-            <button type="submit" id="btn-filter" class="btn btn-primary w-100">Filter</button>
-            <br>
-            <button type="submit" id="btn-reset" class="btn btn-danger w-100 mt-2">Reset</button>
-          </form>
+    // Return early if no listings found.
+    if (!listings || listings.count === 0) {
+        return;
+    }
 
-        </div>
+    // Create cards for each listing, then append to search results container.
+    const listingCards = listings.map(listing => createListingCard(listing));
+    listingCards.forEach(card => container.appendChild(card));
+}
 
-        <div class="col-md-10">
-          <h3 class="text-center " id="saleItems"> Garage Sale Items</h3>
-          <div class="resultsList d-flex flex-wrap justify-content-center">
+// Add event listeners and perform necessary initializtion
+// once page content is loaded.
+document.addEventListener('DOMContentLoaded', () => {
+    // Get distance slider and distOutput field
+    const distSlider = document.querySelector('#range-distance');
+    const distOutput = document.querySelector('#range-output');
+    distOutput.innerHTML = distSlider.value;
 
-          <div class="card" style="width: 16rem;" id="saleItem">
-            <img class="card-img-top" src="assets/images/jacket2.jpg" alt="Card image cap" >
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="btn btn-primary" >Go somewhere</a>
-            </div>
-          </div>
+    // Update the current distance value
+    distSlider.addEventListener('input', function() {
+        distOutput.innerHTML = this.value;
+        Filters.distance = this.value;
+    });
 
-          <div class="card" style="width: 16rem;"id="saleItem">
-            <img class="card-img-top" src="assets/images/tshirt2.jpg" alt="Card image cap">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-          </div>
+    // Get min/max price inputs. Disable if 'Free Only' checked.
+    const priceInputs = document.querySelector('#input-prices');
+    const minPrice = document.querySelector('#min-price');
+    const maxPrice = document.querySelector('#max-price');
 
-          <div class="card" style="width: 16rem;"id="saleItem">
-            <img class="card-img-top" src="assets/images/blouse.jpg" alt="Card image cap">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-          </div>
+    // Min price input
+    minPrice.addEventListener('input', function() {
+        // TODO - add try/catch
+        const min = parseFloat(this.value);
+        Filters.minPrice = min;
+    });
 
-          <div class="card" style="width: 16rem;"id="saleItem">
-            <img class="card-img-top" src="assets/images/fashion-1283863_1280.jpg" alt="Card image cap">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-          </div>
+    // Max price input
+    maxPrice.addEventListener('input', function() {
+        // TODO - add try/catch
+        const max = parseFloat(this.value);
+        Filters.maxPrice = max;
+    });
 
-          <div class="card" style="width: 16rem;"id="saleItem">
-            <img class="card-img-top" src="assets/images/leather.jpg" alt="Card image cap">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-          </div>
+    // Free only checkbox
+    const freeCheckbox = document.querySelector('#is-free');
+    freeCheckbox.addEventListener('click', function() {
+        // If checked, disable price input
+        if (this.checked) {
+            priceInputs.classList.add('disabledinput');
+        } else {
+            priceInputs.classList.remove('disabledinput');
+        }
+        // Update filter value
+        Filters.freeOnly = this.checked;
+    });
 
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+    // Update gender selection
+    const selectedGender = document.querySelector('#select-gender');
+    selectedGender.addEventListener('change', function() {
+        Filters.gender = this.value.toLowerCase();
+    });
 
-  <br>
-  
-  <div id="map">
-</div>
+    // Update item type
+    const selectedType = document.querySelector('#select-type');
+    selectedType.addEventListener('change', function() {
+        Filters.type = this.value.toLowerCase();
+    });
+
+    // Update size selection
+    const selectedSize = document.querySelector('#select-size');
+    selectedSize.addEventListener('change', function() {
+        Filters.size = this.value.toLowerCase();
+    });
+
+    // Update color selection
+    const selectedColor = document.querySelector('#select-color');
+    selectedColor.addEventListener('change', function() {
+        Filters.color = this.value.toLowerCase();
+    });
+
+    // Update item quality selection
+    const selectedCond = document.querySelector('#select-quality');
+    selectedCond.addEventListener('change', function() {
+        Filters.itemQuality = parseInt(this.value);
+    });
+
+    // Filter button click
+    const filterBtn = document.querySelector('#btn-filter');
+    filterBtn.addEventListener('click', function(evt) {
+        // Prevent form submission
+        evt.preventDefault();
+    });
+
+    // Reset filters button click
+    const resetBtn = document.querySelector('#btn-reset');
+    resetBtn.addEventListener('click', function(evt) {
+        // Prevent form submission
+        evt.preventDefault();
+        // Reset Filters
+        resetFilters();
+        // Reset filters form
+        const filtersForm = document.querySelector('#filters');
+        filtersForm.reset();
+        // Make sure price input enabled
+        priceInputs.classList.remove('disabledinput');
+    });
+
+    // Listen for listing search events. Update search results when invoked.
+    this.addEventListener('ListingSearch', evt => {
+        if (evt.detail) {
+            updateResults(evt.detail);
+        }
+    });
+});
 
 
-{{!-- Placed the code for the map here for now. Couldn't get it to work when trying to access the map.js file which has the same code --}}
-{{!-- <script>
-  function initMap() {
+function initMap() {
     // Position that map will be focued on, will need to change this to the zip the user inputs
     var myLatLng = { lat: 47.632530, lng: -122.153737 };
 
-    // Styles a map in night mode.
+    // Styles a map.
     var map = new google.maps.Map(document.getElementById('map'), {
         center: myLatLng,
         zoom: 11,
@@ -657,12 +663,3 @@
         });
     }
 }
-</script> --}}
-{{!-- Link to Google Maps API --}}
-<script async defer
-  src="https://maps.googleapis.com/maps/api/js?key=&callback=initMap" async
-  defer></script>
-  
-  {{!-- <script src="/business/map.js"></script> --}}
-  
-  <script src="./js/filters.js"></script>
