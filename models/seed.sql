@@ -2,6 +2,19 @@ use ogs_db;
 INSERT INTO listings (title, description, image, item_quality, properties, price, contactZip, contactEmail, ItemTypeName, createdAt, updatedAt)
 VALUES ('dress','this is an example red dress','https://i.imgur.com/ej08wfU.jpg',2, '{"color": "red", "size":"s","type":"dress","gender":"womens"}', 21.99,98007, 'temp11@email.com', 'clothing', CURRENT_DATE, CURRENT_DATE);
 
+
+
+=======
+-- Locations seed data
+INSERT INTO locations(zipcode,longitude,latitude,createdAt,updatedAt)
+VALUES (98052,-122.1238767,47.6694141,CURRENT_DATE,CURRENT_DATE),
+(98005,-122.1607932,47.6215654,CURRENT_DATE,CURRENT_DATE);
+
+
+-- Listings seed data
+INSERT INTO listings (title, description, image, item_quality, price, contactZip, contactEmail, ItemTypeName, createdAt, updatedAt)
+VALUES ('tan sweater','this is an example sweater','https://i.imgur.com/JxHDGfs.jpg',1,29.99,98052, 'temp@email.com', 'clothing', CURRENT_DATE, CURRENT_DATE);
+
 INSERT INTO listings (title, description, image, item_quality, properties, price, contactZip, contactEmail, ItemTypeName, createdAt, updatedAt)
 VALUES ('dennim Jacket','this is an example dennim','https://i.imgur.com/aGF0jqg.jpg',2, '{"color": "blue", "size":"m","type":"jacket","gender":"womens"}',09.99,98004, 'temp3@email.com', 'clothing', CURRENT_DATE, CURRENT_DATE);
 
@@ -30,3 +43,4 @@ VALUES ('tan sweater','this is an example sweater','https://i.imgur.com/jmi0xGs.
 INSERT INTO listings (title, description, image, item_quality, properties, price, contactZip, contactEmail, ItemTypeName, createdAt, updatedAt)
 VALUES ('cargo pant','this is an example pant','https://i.imgur.com/sQmPkWr.jpg',2, '{"color": "dark blue", "size":"m","type":"pant","gender":"mens"}', 11.99,98053, 'temp12@email.com', 'clothing', CURRENT_DATE, CURRENT_DATE);
 select * from listings;
+
