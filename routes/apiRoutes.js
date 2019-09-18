@@ -89,9 +89,11 @@ module.exports = function(app) {
             return;
         }
 
+        var newSellerId = getRandomString();
+
         const data = req.body;
 
-        const itemProps = JSON.parse(data.properties);
+        const itemProps = {};//JSON.parse(data.properties);
 
         db.Listing.create({
             title: data.title,
@@ -105,24 +107,17 @@ module.exports = function(app) {
             contactZip: data.contactZip,
             contactEmail: data.contactEmail,
             contactPhone: data.contactPhone,
-            ItemTypeName: 'clothing'
+            ItemTypeName: 'clothing',
+            sellerId: newSellerId
         })
-            //         .then(listing => {
-            //             res.status(200).json({
-            //                 message: `Listing created for ${listing.item}`,
-            //                 data: listing
-            //             });
-            //         })
-            //         .catch(err => res.status(500).json(err));
-            // });
             .then(function(dbPost) {
-                res.json(dbPost);
+                res.render('formConfirmation', { id: dbPost.sellerId })
             });
     });
 
     // Delete an example by id
-    app.delete('/api/listings/:id', function(req, res) {
-        db.Listing.destroy({ where: { id: req.params.id } }).then(function(
+    app.delete('/api/listings/:sellerId', function(req, res) {
+        db.Listing.destroy({ where: { sellerId: req.params.sellerId } }).then(function(
             dbPost
         ) {
             res.json(dbPost);

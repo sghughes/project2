@@ -6,17 +6,17 @@ $(document).ready(function() {
     event.preventDefault();
 
 
-    function makeid(length) {
-      var result = '';
-      var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      var charactersLength = characters.length;
-      for ( var i = 0; i < length; i++ ) {
-         result += characters.charAt(Math.floor(Math.random() * charactersLength));
-      }
-      return result;
-   }
-   var sellerID = makeid(5);
-   console.log(sellerID);
+  //   function makeid(length) {
+  //     var result = '';
+  //     var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  //     var charactersLength = characters.length;
+  //     for ( var i = 0; i < length; i++ ) {
+  //        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  //     }
+  //     return result;
+  //  }
+  //  var sellerID = makeid(5);
+  //  console.log(sellerID);
 
    var itemProps = {
       size: $('#newItemSize').val().toLowerCase(),
@@ -31,7 +31,7 @@ $(document).ready(function() {
       title: $("#newItemTitle").val().trim(),
       description: $("#newItemDescription").val().trim(),
       image: $('#newItemImageUrl').val().trim(),
-      item_quality: $("#newItemCondition").val(),
+      itemQuality: $("#newItemCondition").val(),
       properties: JSON.stringify(itemProps),
       price: $("#newItemPrice").val().trim(),
       contactZip: $("#newItemZipCode").val().trim(),
@@ -39,36 +39,42 @@ $(document).ready(function() {
       contactEmail: $("#email").val().trim(),
       contactPhone: $("#phone").val().trim(),
     };
-    alert('Thank you for posting an item. Your seller ID is ' + sellerID + '. Please save this ID as it will be required to remove your posting.')
+    //alert('Thank you for posting an item. Your seller ID is ' + sellerID + '. Please save this ID as it will be required to remove your posting.')
     console.log(newPost);
     submitPost(newPost);
-  // Submits a new post and brings user to blog page upon completion
+
   function submitPost(Listing) {
-    $.post("/api/listings/", Listing, function() {
-      window.location.href = "/form";
-      console.log("new post is done")
+    $.post("/api/listings/", Listing, function(data) {
+      window.location.href = "/formConfirmation";
+      console.log(data)
+
     });
   };
 
   });
 
   $("#manageButton").on("click", handlePostDelete);
+
   function handlePostDelete(){
+    console.log('clicked');
     var currentPost = $("#itemPostingID").val().trim();
     console.log(currentPost);
     deletePost(currentPost);
   };
+
   //need to add if statement to verify that id exists and alert if it does not
-  function deletePost(id) {
+  function deletePost(sellerId) {
     $.ajax({
       method: "DELETE",
-      url: "/api/listings/" + id
+      url: "/api/listings/" + sellerId
     })
     .then(function(){
       console.log('this post has been deleted')
+      //need to make this a new view
+      window.location.href = "/manage";
       alert('Thanks. Your post has been removed.')
     })
-  }
+  };
 
     // phone number formatting
     $("#phone").keypress(function (e) {
