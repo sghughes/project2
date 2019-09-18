@@ -5,6 +5,7 @@ $(document).ready(function() {
   $(".newItem").on("submit", function handleFormSubmit(event) {
     event.preventDefault();
 
+
     function makeid(length) {
       var result = '';
       var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -17,28 +18,30 @@ $(document).ready(function() {
    var sellerID = makeid(5);
    console.log(sellerID);
 
+   var itemProps = {
+      size: $('#newItemSize').val().toLowerCase(),
+      category: $("#newItemClothingType").val().trim().toLowerCase(),
+      color: $('#newItemColor').val().toLowerCase(),
+      gender: $('#newItemGender').val().toLowerCase()
+   };
+
+
     // Constructing a newPost object to hand to the database
     var newPost = {
       title: $("#newItemTitle").val().trim(),
       description: $("#newItemDescription").val().trim(),
       image: $('#newItemImageUrl').val().trim(),
       item_quality: $("#newItemCondition").val(),
-      properties: {
-        size: $('#newItemSize').val(),
-        category: 'clothing',
-        color: $('#newItemColor').val(),
-        gender: $('#newItemGender').val()
-      },
+      properties: JSON.stringify(itemProps),
       price: $("#newItemPrice").val().trim(),
-      active: 1,
-      isFree: 0,
       contactZip: $("#newItemZipCode").val().trim(),
+      isFree: false,
       contactEmail: $("#email").val().trim(),
       contactPhone: $("#phone").val().trim(),
     };
     alert('Thank you for posting an item. Your seller ID is ' + sellerID + '. Please save this ID as it will be required to remove your posting.')
     console.log(newPost);
-    submitPost(newPost);    
+    submitPost(newPost);
   // Submits a new post and brings user to blog page upon completion
   function submitPost(Listing) {
     $.post("/api/listings/", Listing, function() {

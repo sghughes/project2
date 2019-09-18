@@ -29,10 +29,10 @@ module.exports = function(app) {
     });
   });
 
-  
-  app.get("/items", function(req, res) {
+
+  app.get("/listings", function(req, res) {
     db.ItemType.findAll({}).then(function(ogs_db) {
-      res.render("items", {
+      res.render("listings", {
         msg: "Welcome!",
         examples: ogs_db
       });

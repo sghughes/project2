@@ -1,30 +1,8 @@
-<nav class="navbar navbar-expand-lg navbar-light sticky-top" id="stickyNav">
-    <a class="navbar-brand" href="/"><img src="assets/images/logo.png" style="width:auto;height:35px" id="logo"></a>
-    <div class="collapse navbar-collapse " id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="/">Buy <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item active">
-          <a class="nav-link" href="/form">Sell <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item active">
-        <a class="nav-link" href="/manage">Manage <span class="sr-only">(current)</span></a>
-        </li>
-      </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
-    </div>
-  </nav>
-
-  <div id="buyPage">
-
+<div id="buyPage">
     <div class="jumbotron big-banner">
-      <br>
-      <h1 class="display-4 text-center">ONLINE GARAGE SALE</h1>
-      <p class="lead text-center">Find a bargain in your neighborhood</p>
+        <br>
+        <h1 class="display-4 text-center">ONLINE GARAGE SALE!</h1>
+        <p class="lead text-center">Find a bargain in your neighborhood</p>
     </div>
 
     <div class="container">
@@ -104,8 +82,8 @@
             </div>
 
             <div class="form-group">
-              <label for="select-condition">Condition</label>
-              <select class="form-control" id="select-condition">
+              <label for="select-quality">Condition</label>
+              <select class="form-control" id="select-quality">
                 <option value="0">All</option>
                 <option value="1">New</option>
                 <option value="2">Great</option>
@@ -124,52 +102,9 @@
 
         <div class="col-md-10">
           <h3 class="text-center " id="saleItems"> Garage Sale Items</h3>
-          <div class="resultsList d-flex flex-wrap justify-content-center">
+          <div id="search-results" class="resultsList d-flex flex-wrap justify-content-center">
 
-          <div class="card" style="width: 16rem;" id="saleItem">
-            <img class="card-img-top" src="assets/images/jacket2.jpg" alt="Card image cap" >
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="btn btn-primary" >Go somewhere</a>
-            </div>
-          </div>
-
-          <div class="card" style="width: 16rem;"id="saleItem">
-            <img class="card-img-top" src="assets/images/tshirt2.jpg" alt="Card image cap">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-          </div>
-
-          <div class="card" style="width: 16rem;"id="saleItem">
-            <img class="card-img-top" src="assets/images/blouse.jpg" alt="Card image cap">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-          </div>
-
-          <div class="card" style="width: 16rem;"id="saleItem">
-            <img class="card-img-top" src="assets/images/fashion-1283863_1280.jpg" alt="Card image cap">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-          </div>
-
-          <div class="card" style="width: 16rem;"id="saleItem">
-            <img class="card-img-top" src="assets/images/leather.jpg" alt="Card image cap">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-          </div>
+              {{!-- Search results dynamically loaded here --}}
 
           </div>
         </div>
@@ -178,13 +113,13 @@
   </div>
 
   <br>
-  
+
   <div id="map">
 </div>
 
 
 {{!-- Placed the code for the map here for now. Couldn't get it to work when trying to access the map.js file which has the same code --}}
-<script>
+{{!-- <script>
   function initMap() {
     // Position that map will be focued on, will need to change this to the zip the user inputs
     var myLatLng = { lat: 47.632530, lng: -122.153737 };
@@ -657,12 +592,12 @@
         });
     }
 }
-</script>
+</script> --}}
 {{!-- Link to Google Maps API --}}
 <script async defer
   src="https://maps.googleapis.com/maps/api/js?key=&callback=initMap" async
   defer></script>
-  
-  <script src="/business/map.js"></script>
-  
-  <script src="./js/filters.js"></script>
+
+  {{!-- <script src="/business/map.js"></script> --}}
+
+  <script src="./js/listings.js"></script>
