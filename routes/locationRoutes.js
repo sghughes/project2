@@ -1,4 +1,8 @@
 var db = require('../models');
+const mapsClient = require('@google/maps').createClient({
+    key: process.env.GMAPS_KEY,
+    Promise: Promise
+});
 
 module.exports = function(app) {
     // Look up all stored locations
@@ -6,7 +10,7 @@ module.exports = function(app) {
         db.Location.findAll().then(data => {
             res.json(data);
         });
-    })
+    });
 
     // Look up one location
     app.get('/api/locations/:zipcode', (req, res) => {
@@ -23,7 +27,30 @@ module.exports = function(app) {
             } else {
                 // TODO - this needs to call google maps api if not found, then add to Location table,
                 // then return new Location.
-                res.status(404).send(`No location found for zip ${zipcode}`);
+                mapsClient.geocode({
+                    components: { postal_code: zipcode }
+                }).asPromise()
+                .then(response => {
+                    if (response.status !== 200) {
+                        res.status(response.status);
+                    } else if (response.json.results.length === 0) {
+                        res.status(404).send(`Geocode lookup failed for zipcode ${zipcode}`);
+                    }
+
+                    // We found geocode data, now add to DB for future use, then return as json.
+                    const geocodeData = response.json.results[0];
+                    const newLocation = {
+                        zipcode: zipcode,
+                        latitude: geocodeData.geometry.location.lat,
+                        longitude: geocodeData.geometry.location.lng,
+                    };
+
+                    db.Location.create(newLocation).then(() => res.json(newLocation));
+                })
+                .catch(err => {
+                    console.log(err);
+                    res.status(500).send('Error processing google maps geocode request.');
+                });
             }
         });
     });
