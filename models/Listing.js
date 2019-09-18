@@ -22,7 +22,13 @@ module.exports = function(sequelize, DataTypes) {
             allowNull: false
         },
         contactEmail: DataTypes.STRING,
-        contactPhone: DataTypes.STRING
+        contactPhone: DataTypes.STRING,
+        sellerId: DataTypes.STRING
+    },{
+        indexes: [
+            {unique: true,
+            fields: ['sellerId']}
+        ]
     });
 
     return Listing;
