@@ -54,3 +54,12 @@ body {
 .nav-link:hover {
     cursor: pointer;
 }
+
+.listing-image {
+    max-height: 500px;
+    width: auto;
+}
+
+.listing-title {
+    text-transform: capitalize;
+}
