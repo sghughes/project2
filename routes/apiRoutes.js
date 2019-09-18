@@ -98,7 +98,7 @@ module.exports = function(app) {
             description: data.description,
             image: data.image,
             item: data.item,
-            condition: data.condition,
+            itemQuality: data.item_quality,
             properties: itemProps,
             price: data.price,
             isFree: data.isFree || parseFloat(data.price) == 0,
