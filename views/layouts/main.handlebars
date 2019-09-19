@@ -3,19 +3,20 @@
 
 <head>
   <meta charset="utf-8">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/styles/styles.css" media="screen" title="no title" charset="utf-8">
+
   <title>Online Garage Sale</title>
 
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Shadows+Into+Light|Source+Sans+Pro&display=swap" rel="stylesheet">
   <script src="https://code.jquery.com/jquery.js"></script>
   <script src="https://kit.fontawesome.com/622bde9dfc.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
-  <!-- Alertify Modal -->
   <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.11.4/build/alertify.min.js"></script>
+
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.4/build/css/alertify.min.css"/>
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.4/build/css/themes/default.min.css"/>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans|Shadows+Into+Light|Source+Sans+Pro&display=swap" >
+  <link rel="stylesheet" href="/styles/styles.css" media="screen" title="no title" charset="utf-8">
+
 </head>
 
 <body>
@@ -25,7 +26,7 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="navbar-brand" href="/"><img src="assets/images/logo2.png" id="logo"></a>
+        <a class="navbar-brand" href="/"><img src="/images/logo2.png" id="logo"></a>
         <div class="collapse navbar-collapse justify-content-between" id="navbarToggle">
             <ul class="navbar-nav mt-2 mt-lg-0">
                 <li class="nav-item active">
@@ -40,9 +41,9 @@
             </ul>
             <form id="search-form" class="form-inline my-2 my-lg-0">
                 <div class="input-group w-100">
-                    <input id="input-search" type="text" class="form-control" placeholder="Search">
+                    <input id="input-search" type="text" class="form-control" placeholder="Search" name="item">
                     <div class="input-group-append">
-                        <button id="btn-search" class="btn btn-outline-success" type="button"><i class="fas fa-search"></i></button>
+                        <button id="btn-search" class="btn btn-outline-success"><i class="fas fa-search"></i></button>
                     </div>
                 </div>
             </form>
