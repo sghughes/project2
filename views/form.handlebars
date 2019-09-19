@@ -33,15 +33,16 @@
           </div>
 
           <div class="form-check mb-3">
-            <input class="form-check-input" type="checkbox" id="is-free">
-            <label class="form-check-label" for="is-free">
+            <input class="form-check-input" type="checkbox" id="newFreeItem" value=false>
+            <label class="form-check-label" for="freeItem">
                 Give item away (free)
             </label>
           </div>
+        
 
-          <div class="form-group">
-            <label for="formGroupExampleInput">Price</label>
-            <input type="number" step=".01" class="form-control" id="newItemPrice" placeholder="Price" name="price" pattern="[0-9]*" required>
+          <div class="form-group" id='newPriceInput'>
+            <label for="newPriceInput">Price</label>
+            <input type="number" step=".01" class="form-control" id="newItemPrice" placeholder="Price" name="price" pattern="[0-9]*" value=0>
           </div>
 
           <div class="form-group">
@@ -123,3 +124,6 @@
     </div>
   </div>
 </div>
+
+
+<script src="/js/index.js"></script>
