@@ -1,6 +1,14 @@
 // properties
 const SIZES = ['xs', 's', 'm', 'l', 'xl'];
-const TYPES = ['shirts', 'jackets', 'pants', 'sweaters', 'dresses', 'shorts', 'skirts'];
+const TYPES = [
+    'shirts',
+    'pants',
+    'shorts',
+    'skirts',
+    'sweaters',
+    'coats',
+    'dresses',
+];
 const COLORS = [
     'black',
     'white',
@@ -12,7 +20,7 @@ const COLORS = [
     'purple',
     'orange',
     'tan',
-    'other'
+    'pink'
 ];
 
 // item types
@@ -22,7 +30,7 @@ const CLOTHING = {
         ['size', SIZES],
         ['category', TYPES],
         ['color', COLORS],
-        ['gender', ['na','mens', 'womens']]
+        ['gender', ['na', 'mens', 'womens']]
     ])
 };
 
