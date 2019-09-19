@@ -66,8 +66,15 @@ $(document).ready(function() {
     .then(function(){
       console.log('this post has been deleted')
       //need to make this a new view
-      window.location.href = "/manage";
-      alert('Thanks. Your post has been removed.')
+
+      //window.location.href = "/manage";
+      // alert('Thanks. Your post has been removed.')
+      alertify.alert('Item Removed', 'Thank you. Your post has been deleted from Online Garage Sale.', 
+      function(){
+        alertify.success('ok');
+        window.location.href = "/";
+      });
+
     })
   };
 
