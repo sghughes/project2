@@ -90,12 +90,12 @@ function updateResults(listings) {
 document.addEventListener('DOMContentLoaded', () => {
     // Get distance slider and distOutput field
     const distSlider = document.querySelector('#range-distance');
-    const distOutput = document.querySelector('#range-output');
-    distOutput.innerHTML = distSlider.value;
+    const distLabel = document.querySelector('#label-distance');
 
     // Update the current distance value
     distSlider.addEventListener('input', function() {
-        distOutput.innerHTML = this.value;
+        const distLbl = this.value == 0 ? 'Any distance' : `Within ${this.value} miles`;
+        distLabel.innerHTML = distLbl;
         Filters.distance = this.value;
     });
 
