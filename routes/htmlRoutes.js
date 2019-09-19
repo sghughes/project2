@@ -15,14 +15,9 @@ module.exports = function(app) {
         res.render('form');
     });
 
-    app.get('/formConfirmation', function(req, res) {
-        db.ItemType.findAll({}).then(function(ogs_db) {
-            res.render('form', {
-                msg: 'Welcome!',
-                examples: ogs_db
-            });
-        });
-    });
+  app.get("/formConfirmation", function(req, res) {
+    res.render("formConfirmation");
+  });
 
     app.get('/manage', function(req, res) {
         res.render('manage');
@@ -73,4 +68,6 @@ module.exports = function(app) {
             res.render('404');
         });
     });
+};
+
 };

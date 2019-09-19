@@ -1,5 +1,32 @@
+// Display current location in navbar
+function updateCurrentLocation(location) {
+    const locationDiv = document.querySelector('#current-location');
+    const locationName = document.querySelector('#location-name');
+
+    if (location && location.name) {
+        locationDiv.classList.remove('hiddeninput');
+        locationName.innerHTML = ' ' + location.name;
+    } else {
+        locationDiv.classList.add('hiddeninput');
+        locationName.innerHTML = '';
+    }
+}
+
 // Get the current location of the user.
 function getUserLocation() {
+
+    // First check session storage
+    const storedLocation = sessionStorage.getItem('location');
+    try {
+        const parsed = JSON.parse(storedLocation);
+        if (parsed) {
+            updateCurrentLocation(parsed);
+            return;
+        }
+    } catch(err) {
+        console.log('Error parsing location data from session storage', err);
+    }
+
     let location = {};
 
     // Determine location of user through geolocation (if supported).
@@ -12,6 +39,16 @@ function getUserLocation() {
                     longitude: position.coords.longitude
                 };
                 sessionStorage.setItem('location', JSON.stringify(location));
+                fetch(`/api/locations/${location.latitude}/${location.longitude}`)
+                .then(response => {
+                    return response.json();
+                })
+                .then(data => {
+                    updateCurrentLocation(data);
+                })
+                .catch(err => {
+                    console.log('Error updating current location', err);
+                });
             },
             error => {
                 if (
@@ -30,19 +67,8 @@ function getUserLocation() {
 }
 
 // Open a prompt to get user zip code
-function promptForZip(update = false) {
-    // First check session storage
-    if (update === false) {
-        const storedLocation = sessionStorage.getItem('location');
-        try {
-            const parsed = JSON.parse(storedLocation);
-            if (parsed) {
-                return;
-            }
-        } catch(err) {
-            console.log('Error parsing location data from session storage', err);
-        }
-    }
+function promptForZip() {
+
 
     // Prompt for valid zip code until given
     alertify
@@ -78,6 +104,7 @@ function promptForZip(update = false) {
                         'location',
                         JSON.stringify(location)
                     );
+                    updateCurrentLocation(location);
 
                     // Display success
                     this.keepOpen = false;
