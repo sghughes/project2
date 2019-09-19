@@ -68,3 +68,8 @@ body {
 .listing-title {
     text-transform: capitalize;
 }
+
+#logo {
+    height: 50px;
+    width: auto;
+}
