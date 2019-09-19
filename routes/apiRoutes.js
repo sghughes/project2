@@ -1,5 +1,5 @@
 const db = require('../models');
-const helper = requier('../business/helpers.js')
+const helper = require('../business/helpers')
 
 module.exports = function(app) {
     // GET routes
