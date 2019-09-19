@@ -6,7 +6,7 @@ body {
     font-family: 'Source Sans Pro', sans-serif;
 }
 .big-banner {
-    background-image: url(/images/jumbo4.jpg);
+    background-image: url(/images/banner.jpg);
     /* background-size: 100%; */
     background-repeat: no-repeat;
     background-size: cover;
