@@ -1,4 +1,7 @@
-use ogs_db;
+USE ogs_db;
+
+TRUNCATE locations;
+TRUNCATE listings;
 
 -- Locations seed data
 INSERT INTO locations(zipcode,longitude,latitude,createdAt,updatedAt)
@@ -20,4 +23,5 @@ VALUES ('tan sweater','this is an example sweater','https://i.imgur.com/JxHDGfs.
 ('dress','this is an example red dress','https://i.imgur.com/ej08wfU.jpg',4, '{"color": "red", "size":"s","type":"dress","gender":"womens"}', 21.99,98007, 'temp11@email.com', 'clothing', CURRENT_DATE, CURRENT_DATE);
 
 -- Free Listings seed data
--- TODO!
+INSERT INTO listings (title, description, image, itemQuality, properties, isFree, contactZip, contactEmail, ItemTypeName, createdAt, updatedAt)
+VALUES ('free angry shorts','These shorts are just too angry to hold onto...','https://i.imgur.com/kR5kfEO.jpg',3, '{"color": "tan", "size":"l","type":"shorts","gender":"mens"}', true,98375, 'shorts-master@yahoo.com', 'clothing', CURRENT_DATE, CURRENT_DATE);
