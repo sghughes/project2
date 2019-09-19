@@ -17,9 +17,9 @@ body {
     font-family: 'Shadows Into Light', cursive;
 }
 
-/* #logo {
-  position: absolute;
-} */
+#search-form {
+    width: 30%;
+}
 
 #stickyNav {
     background-color: #fff;
@@ -49,6 +49,11 @@ body {
 .disabledinput {
     pointer-events: none;
     opacity: 0.4;
+}
+
+.hiddeninput {
+    pointer-events: none;
+    opacity: 0;
 }
 
 .nav-link:hover {

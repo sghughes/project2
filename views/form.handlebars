@@ -5,8 +5,6 @@
     <p class="lead text-center">Find a bargain in your neighborhood</p>
   </div>
 
-
-
   <div class="container">
     <div class="row">
       <div class="col-md-12">
@@ -15,7 +13,7 @@
 
           <div class="form-group">
             <label for="exampleFormControlInput1">Email address</label>
-            <input type="email" class="form-control" id="email" placeholder="name@example.com" name="contactEmail" required> 
+            <input type="email" class="form-control" id="email" placeholder="name@example.com" name="contactEmail" required>
           </div>
 
           <div class="form-group">
@@ -31,7 +29,7 @@
 
           <div class="form-group">
             <label for="newItemZipCode">Zip code</label>
-            <input type="text" class="form-control" id="newItemZipCode" placeholder="Zip Code" name="contactZip" pattern="[0-9]*" minlength=5 maxlength=5 required> 
+            <input type="text" class="form-control" id="newItemZipCode" placeholder="Zip Code" name="contactZip" pattern="[0-9]*" minlength=5 maxlength=5 required>
           </div>
 
           <div class="form-check mb-3">
@@ -49,6 +47,7 @@
           <div class="form-group">
             <label for="gender">Mens or Womens</label>
             <select class="form-control" id="newItemGender" required>
+              <option value='na'>N/A</option>
               <option value='mens'>Mens</option>
               <option value='womens'>Womens</option>
             </select>
@@ -57,10 +56,13 @@
           <div class="form-group">
             <label for="exampleFormControlSelect1">Clothing Type</label>
             <select class="form-control" id="newItemClothingType" name="item" required>
-                <option value='tops'>Tops</option>
+                <option value='shirt'>Shirt</option>
                 <option value='pants'>Pants</option>
-                <option value='sweaters'>Sweaters</option>
-                <option value='dresses'>Dresses</option>
+                <option value='shorts'>Shorts</option>
+                <option value='skirt'>Skirt</option>
+                <option value='sweater'>Sweater</option>
+                <option value='coat'>Coat</option>
+                <option value='dress'>Dress</option>
             </select>
           </div>
 
@@ -87,6 +89,8 @@
               <option value='brown'>Brown</option>
               <option value='purple'>Purple</option>
               <option value='orange'>Orange</option>
+              <option value='tan'>Tan</option>
+              <option value='pink'>Pink</option>
               <option value='other'>Other</option>
             </select>
           </div>
