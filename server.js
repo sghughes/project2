@@ -2,6 +2,7 @@ require('dotenv').config();
 var express = require('express');
 var exphbs = require('express-handlebars');
 var morgan = require('morgan');
+var path = require('path');
 
 var db = require('./models');
 var initData = require('./basedata/init');
@@ -12,7 +13,10 @@ var PORT = process.env.PORT || 3000;
 // Middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname,'public')));
+app.use('/js', express.static(path.join(__dirname,'public','assets','js')));
+app.use('/styles', express.static(path.join(__dirname,'public','assets','styles')));
+app.use('/images', express.static(path.join(__dirname,'public','assets','images')));
 app.use(morgan('dev'));
 
 // Handlebars
