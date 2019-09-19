@@ -5,16 +5,15 @@
         <p class="lead text-center">Find a bargain in your neighborhood</p>
     </div>
 
-    <div class="container">
+    <div class="container-fluid">
       <div class="row">
         <div class="col-md-2">
-          <h3 class="text-center">Filter</h3>
+          <h3 class="text-center">Filters</h3>
 
           <form id="filters">
             <div class="form-group">
-              <label for="range-distance">Distance (Miles)</label>
-              <input type="range" class="custom-range" id="range-distance" value="10">
-              <span id="range-output"></span>
+              <label id="label-distance" for="range-distance">Within 10 miles</label>
+              <input type="range" class="custom-range w-100" id="range-distance" value="10">
             </div>
 
             <div class="form-check mb-3">
