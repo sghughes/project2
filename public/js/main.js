@@ -114,9 +114,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Make sure search input is supplied. If not, do nothing (exit early)
         const searchItem = document.querySelector('#input-search').value.trim();
-        if (searchItem === '') {
-            return;
-        }
 
         // Check to see if filters are defined (from separate view).
         // If found, append to API request query string
@@ -129,16 +126,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Perform GET request to find matching listings
         try {
-            const response = await fetch('/api/listings' + searchParams);
-            const data = await response.json();
-
-            // Fire new ListingSearch event for Listeners to handle
-            const searchEvent = new CustomEvent('ListingSearch', {
-                detail: data
-            });
-            this.dispatchEvent(searchEvent);
+            fetch('/listings' + searchParams);
         } catch (err) {
-            console.log('ERROR searching for listings', err);
+            console.log('ERROR searching for listings', err, searchParams);
         }
     });
 });

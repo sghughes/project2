@@ -1,4 +1,5 @@
 var db = require("../models");
+var helper = require("../business/helpers");
 
 module.exports = function(app) {
   // Load index page
@@ -25,6 +26,7 @@ module.exports = function(app) {
 
 
   app.get("/listings", function(req, res) {
+    const searchCriteria = helper.getSearchCriteria(req.query);
     res.render("listings");
   });
 
