@@ -1,27 +1,62 @@
-  <div id="managePage">
-    <div class="jumbotron big-banner">
-      <br>
-      <h1 class="display-4 text-center">ONLINE GARAGE SALE!</h1>
-      <p class="lead text-center">Find a bargain in your neighborhood</p>
-    </div>
-
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <h2 class="text-center">Enter item ID to remove post</h2>
-          <form>
-
-            <div class="form-group">
-              <label for="formGroupExampleInput">Item Posting ID</label>
-              <input type="text" class="form-control" id="itemPostingID" placeholder="itemID">
-            </div>
-
-            <button type="button" class="btn btn-primary" id="manageButton">Mark Item Sold</button>
-
-          </form>
+{{!-- Navbar with MANAGE nav button labeled as active --}}
+<nav class="navbar fixed-top navbar-expand-md navbar-light bg-light">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
+    aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <a class="navbar-brand" href="/"><img src="assets/images/logo2.png" id="logo"></a>
+  <div class="collapse navbar-collapse justify-content-between" id="navbarToggle">
+    <ul class="navbar-nav mt-2 mt-lg-0">
+      <li class="nav-item">
+        <a class="nav-link" href="/listings">Buy</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/form">Sell</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/manage">Manage</a>
+      </li>
+    </ul>
+    <form id="search-form" class="form-inline my-2 my-lg-0">
+      <div class="input-group w-100">
+        <input id="input-search" type="text" class="form-control" placeholder="Search">
+        <div class="input-group-append">
+          <button id="btn-search" class="btn btn-outline-success" type="button"><i class="fas fa-search"></i></button>
         </div>
+      </div>
+    </form>
+    <div id="current-location" class="hiddeninput">
+      <i class="fas fa-map-marker-alt fa-lg"></i>
+      <span id="location-name"></span>
+    </div>
+  </div>
+</nav>
+
+
+<div id="managePage">
+  <div class="jumbotron big-banner">
+    <br>
+    <h1 class="display-4 text-center">ONLINE GARAGE SALE!</h1>
+    <p class="lead text-center">Find a bargain in your neighborhood</p>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h2 class="text-center">Enter item ID to remove post</h2>
+        <form>
+
+          <div class="form-group">
+            <label for="formGroupExampleInput">Item Posting ID</label>
+            <input type="text" class="form-control" id="itemPostingID" placeholder="itemID">
+          </div>
+
+          <button type="button" class="btn btn-primary" id="manageButton">Mark Item Sold</button>
+
+        </form>
       </div>
     </div>
   </div>
+</div>
 
-    <script src="/js/index.js"></script>
+<script src="/js/index.js"></script>

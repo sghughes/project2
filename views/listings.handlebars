@@ -1,3 +1,38 @@
+{{!-- Navbar with BUY nav button labeled as active --}}
+<nav class="navbar fixed-top navbar-expand-md navbar-light bg-light">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
+        aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="/"><img src="assets/images/logo2.png" id="logo"></a>
+    <div class="collapse navbar-collapse justify-content-between" id="navbarToggle">
+        <ul class="navbar-nav mt-2 mt-lg-0">
+            <li class="nav-item active">
+                <a class="nav-link" href="/listings">Buy</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/form">Sell</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/manage">Manage</a>
+            </li>
+        </ul>
+        <form id="search-form" class="form-inline my-2 my-lg-0">
+            <div class="input-group w-100">
+                <input id="input-search" type="text" class="form-control" placeholder="Search">
+                <div class="input-group-append">
+                    <button id="btn-search" class="btn btn-outline-success" type="button"><i
+                            class="fas fa-search"></i></button>
+                </div>
+            </div>
+        </form>
+        <div id="current-location" class="hiddeninput">
+            <i class="fas fa-map-marker-alt fa-lg"></i>
+            <span id="location-name"></span>
+        </div>
+    </div>
+</nav>
+
 <div id="buyPage">
     <div class="jumbotron big-banner">
         <br>
@@ -6,603 +41,601 @@
     </div>
 
     <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-2">
-          <h3 class="text-center">Filters</h3>
+        <div class="row">
+            <div class="col-md-2">
+                <h3 class="text-center">Filters</h3>
 
-          <form id="filters">
-            <div class="form-group">
-              <label id="label-distance" for="range-distance">Within 10 miles</label>
-              <input type="range" class="custom-range w-100" id="range-distance" value="10">
+                <form id="filters">
+                    <div class="form-group">
+                        <label id="label-distance" for="range-distance">Within 10 miles</label>
+                        <input type="range" class="custom-range w-100" id="range-distance" value="10">
+                    </div>
+
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="checkbox" id="is-free">
+                        <label class="form-check-label" for="is-free">
+                            Free Only
+                        </label>
+                    </div>
+
+                    <div id="input-prices" class="form-group">
+                        <label for="min-price">Min Price ($)</label>
+                        <input class="form-control" type="number" name="min-price" id="min-price" value="0">
+
+                        <label for="max-price">Max Price ($)</label>
+                        <input class="form-control" type="number" name="max-price" id="max-price" value="100">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="select-gender">Mens or Womens</label>
+                        <select class="form-control" id="select-gender">
+                            <option selected>All</option>
+                            <option value='na'>N/A</option>
+                            <option value='mens'>Mens</option>
+                            <option value='womens'>Womens</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="select-type">Clothing Type</label>
+                        <select class="form-control" id="select-type">
+                            <option>All</option>
+                            <option value='shirt'>Shirts</option>
+                            <option value='pants'>Pants</option>
+                            <option value='shorts'>Shorts</option>
+                            <option value='skirt'>Skirts</option>
+                            <option value='sweater'>Sweaters</option>
+                            <option value='coat'>Coats</option>
+                            <option value='dress'>Dresses</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="select-size">Size</label>
+                        <select class="form-control" id="select-size">
+                            <option>All</option>
+                            <option value='xs'>XS</option>
+                            <option value='s'>S</option>
+                            <option value='m'>M</option>
+                            <option value='l'>L</option>
+                            <option value='xl'>XL</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="select-color">Color</label>
+                        <select class="form-control" id="select-color">
+                            <option value="all">All</option>
+                            <option value="black">Black</option>
+                            <option value='white'>White</option>
+                            <option value='blue'>Blue</option>
+                            <option value='red'>Red</option>
+                            <option value='green'>Green</option>
+                            <option value='yellow'>Yellow</option>
+                            <option value='brown'>Brown</option>
+                            <option value='purple'>Purple</option>
+                            <option value='orange'>Orange</option>
+                            <option value='tan'>Tan</option>
+                            <option value='pink'>Pink</option>
+                            <option value='other'>Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="select-quality">Condition</label>
+                        <select class="form-control" id="select-quality">
+                            <option value="0">All</option>
+                            <option value="1">New</option>
+                            <option value="2">Great</option>
+                            <option value="3">Used</option>
+                            <option value="4">Worn</option>
+                            <option value="5">Damaged</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" id="btn-filter" class="btn btn-primary w-100">Filter</button>
+                    <br>
+                    <button type="submit" id="btn-reset" class="btn btn-danger w-100 mt-2">Reset</button>
+                </form>
+
             </div>
 
-            <div class="form-check mb-3">
-                <input class="form-check-input" type="checkbox" id="is-free">
-                <label class="form-check-label" for="is-free">
-                    Free Only
-                </label>
+            <div class="col-md-10">
+                <h3 class="text-center " id="saleItems"> Garage Sale Items</h3>
+                <div id="search-results" class="resultsList d-flex flex-wrap justify-content-center">
+
+                    {{!-- Search results dynamically loaded here --}}
+
+                </div>
             </div>
-
-            <div id="input-prices" class="form-group">
-                <label for="min-price">Min Price ($)</label>
-                <input class="form-control" type="number" name="min-price" id="min-price" value="0">
-
-                <label for="max-price">Max Price ($)</label>
-                <input class="form-control" type="number" name="max-price" id="max-price" value="100">
-            </div>
-
-            <div class="form-group">
-              <label for="select-gender">Mens or Womens</label>
-              <select class="form-control" id="select-gender">
-                <option selected>All</option>
-                <option value='na'>N/A</option>
-                <option value='mens'>Mens</option>
-                <option value='womens'>Womens</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label for="select-type">Clothing Type</label>
-              <select class="form-control" id="select-type">
-                <option>All</option>
-                <option value='shirt'>Shirts</option>
-                <option value='pants'>Pants</option>
-                <option value='shorts'>Shorts</option>
-                <option value='skirt'>Skirts</option>
-                <option value='sweater'>Sweaters</option>
-                <option value='coat'>Coats</option>
-                <option value='dress'>Dresses</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label for="select-size">Size</label>
-              <select class="form-control" id="select-size">
-                <option>All</option>
-                <option value='xs'>XS</option>
-                <option value='s'>S</option>
-                <option value='m'>M</option>
-                <option value='l'>L</option>
-                <option value='xl'>XL</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label for="select-color">Color</label>
-              <select class="form-control" id="select-color">
-                <option value="all" >All</option>
-                <option value="black">Black</option>
-                <option value='white'>White</option>
-                <option value='blue'>Blue</option>
-                <option value='red'>Red</option>
-                <option value='green'>Green</option>
-                <option value='yellow'>Yellow</option>
-                <option value='brown'>Brown</option>
-                <option value='purple'>Purple</option>
-                <option value='orange'>Orange</option>
-                <option value='tan'>Tan</option>
-                <option value='pink'>Pink</option>
-                <option value='other'>Other</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label for="select-quality">Condition</label>
-              <select class="form-control" id="select-quality">
-                <option value="0">All</option>
-                <option value="1">New</option>
-                <option value="2">Great</option>
-                <option value="3">Used</option>
-                <option value="4">Worn</option>
-                <option value="5">Damaged</option>
-              </select>
-            </div>
-
-            <button type="submit" id="btn-filter" class="btn btn-primary w-100">Filter</button>
-            <br>
-            <button type="submit" id="btn-reset" class="btn btn-danger w-100 mt-2">Reset</button>
-          </form>
-
         </div>
-
-        <div class="col-md-10">
-          <h3 class="text-center " id="saleItems"> Garage Sale Items</h3>
-          <div id="search-results" class="resultsList d-flex flex-wrap justify-content-center">
-
-              {{!-- Search results dynamically loaded here --}}
-
-          </div>
-        </div>
-      </div>
     </div>
-  </div>
+</div>
 
-  <br>
+<br>
 
-  <div id="map">
+<div id="map">
 </div>
 
 
 {{!-- Placed the code for the map here for now. Couldn't get it to work when trying to access the map.js file which has the same code --}}
 {{!-- <script>
-  function initMap() {
-    // Position that map will be focued on, will need to change this to the zip the user inputs
-    var myLatLng = { lat: 47.632530, lng: -122.153737 };
+    function initMap() {
+        // Position that map will be focued on, will need to change this to the zip the user inputs
+        var myLatLng = { lat: 47.632530, lng: -122.153737 };
 
-    // Styles a map in night mode.
-    var map = new google.maps.Map(document.getElementById('map'), {
-        center: myLatLng,
-        zoom: 11,
-        styles: [
-            // **********************Sin City theme**********************
-            {
-                "featureType": "all",
-                "elementType": "labels",
-                "stylers": [
-                    {
-                        "visibility": "on"
-                    }
-                ]
-            },
-            {
-                "featureType": "all",
-                "elementType": "labels.text.fill",
-                "stylers": [
-                    {
-                        "saturation": 36
-                    },
-                    {
-                        "color": "#000000"
-                    },
-                    {
-                        "lightness": 40
-                    }
-                ]
-            },
-            {
-                "featureType": "all",
-                "elementType": "labels.text.stroke",
-                "stylers": [
-                    {
-                        "visibility": "on"
-                    },
-                    {
-                        "color": "#000000"
-                    },
-                    {
-                        "lightness": 16
-                    }
-                ]
-            },
-            {
-                "featureType": "all",
-                "elementType": "labels.icon",
-                "stylers": [
-                    {
-                        "visibility": "on"
-                    }
-                ]
-            },
-            {
-                "featureType": "administrative",
-                "elementType": "geometry.fill",
-                "stylers": [
-                    {
-                        "color": "#000000"
-                    },
-                    {
-                        "lightness": 20
-                    }
-                ]
-            },
-            {
-                "featureType": "administrative",
-                "elementType": "geometry.stroke",
-                "stylers": [
-                    {
-                        "color": "#000000"
-                    },
-                    {
-                        "lightness": 17
-                    },
-                    {
-                        "weight": 1.2
-                    }
-                ]
-            },
-            {
-                "featureType": "administrative.locality",
-                "elementType": "labels.text.fill",
-                "stylers": [
-                    {
-                        "color": "#c4c4c4"
-                    }
-                ]
-            },
-            {
-                "featureType": "administrative.neighborhood",
-                "elementType": "labels.text.fill",
-                "stylers": [
-                    {
-                        "color": "#707070"
-                    }
-                ]
-            },
-            {
-                "featureType": "landscape",
-                "elementType": "geometry",
-                "stylers": [
-                    {
-                        "color": "#000000"
-                    },
-                    {
-                        "lightness": 20
-                    }
-                ]
-            },
-            {
-                "featureType": "poi",
-                "elementType": "geometry",
-                "stylers": [
-                    {
-                        "color": "#000000"
-                    },
-                    {
-                        "lightness": 21
-                    },
-                    {
-                        "visibility": "on"
-                    }
-                ]
-            },
-            {
-                "featureType": "poi.business",
-                "elementType": "geometry",
-                "stylers": [
-                    {
-                        "visibility": "on"
-                    }
-                ]
-            },
-            {
-                "featureType": "road.highway",
-                "elementType": "geometry.fill",
-                "stylers": [
-                    {
-                        "color": "#be2026"
-                    },
-                    {
-                        "lightness": "0"
-                    },
-                    {
-                        "visibility": "on"
-                    }
-                ]
-            },
-            {
-                "featureType": "road.highway",
-                "elementType": "geometry.stroke",
-                "stylers": [
-                    {
-                        "visibility": "off"
-                    }
-                ]
-            },
-            {
-                "featureType": "road.highway",
-                "elementType": "labels.text.fill",
-                "stylers": [
-                    {
-                        "visibility": "on"
-                    }
-                ]
-            },
-            {
-                "featureType": "road.highway",
-                "elementType": "labels.text.stroke",
-                "stylers": [
-                    {
-                        "visibility": "on"
-                    },
-                    {
-                        "hue": "#ff000a"
-                    }
-                ]
-            },
-            {
-                "featureType": "road.arterial",
-                "elementType": "geometry",
-                "stylers": [
-                    {
-                        "color": "#000000"
-                    },
-                    {
-                        "lightness": 18
-                    }
-                ]
-            },
-            {
-                "featureType": "road.arterial",
-                "elementType": "geometry.fill",
-                "stylers": [
-                    {
-                        "color": "#575757"
-                    }
-                ]
-            },
-            {
-                "featureType": "road.arterial",
-                "elementType": "labels.text.fill",
-                "stylers": [
-                    {
-                        "color": "#ffffff"
-                    }
-                ]
-            },
-            {
-                "featureType": "road.arterial",
-                "elementType": "labels.text.stroke",
-                "stylers": [
-                    {
-                        "color": "#2c2c2c"
-                    }
-                ]
-            },
-            {
-                "featureType": "road.local",
-                "elementType": "geometry",
-                "stylers": [
-                    {
-                        "color": "#000000"
-                    },
-                    {
-                        "lightness": 16
-                    }
-                ]
-            },
-            {
-                "featureType": "road.local",
-                "elementType": "labels.text.fill",
-                "stylers": [
-                    {
-                        "color": "#999999"
-                    }
-                ]
-            },
-            {
-                "featureType": "road.local",
-                "elementType": "labels.text.stroke",
-                "stylers": [
-                    {
-                        "saturation": "-52"
-                    }
-                ]
-            },
-            {
-                "featureType": "transit",
-                "elementType": "geometry",
-                "stylers": [
-                    {
-                        "color": "#000000"
-                    },
-                    {
-                        "lightness": 19
-                    }
-                ]
-            },
-            {
-                "featureType": "water",
-                "elementType": "geometry",
-                "stylers": [
-                    {
-                        "color": "#000000"
-                    },
-                    {
-                        "lightness": 17
-                    }
-                ]
-            },
-             // **********************Dark Theme**********************
-            // { elementType: 'geometry', stylers: [{ color: '#242f3e' }] },
-            // { elementType: 'labels.text.stroke', stylers: [{ color: '#242f3e' }] },
-            // { elementType: 'labels.text.fill', stylers: [{ color: '#746855' }] },
-            // {
-            //     featureType: 'administrative.locality',
-            //     elementType: 'labels.text.fill',
-            //     stylers: [{ color: '#d59563' }]
-            // },
-            // {
-            //     featureType: 'poi',
-            //     elementType: 'labels.text.fill',
-            //     stylers: [{ color: '#d59563' }]
-            // },
-            // {
-            //     featureType: 'poi.park',
-            //     elementType: 'geometry',
-            //     stylers: [{ color: '#263c3f' }]
-            // },
-            // {
-            //     featureType: 'poi.park',
-            //     elementType: 'labels.text.fill',
-            //     stylers: [{ color: '#6b9a76' }]
-            // },
-            // {
-            //     featureType: 'road',
-            //     elementType: 'geometry',
-            //     stylers: [{ color: '#38414e' }]
-            // },
-            // {
-            //     featureType: 'road',
-            //     elementType: 'geometry.stroke',
-            //     stylers: [{ color: '#212a37' }]
-            // },
-            // {
-            //     featureType: 'road',
-            //     elementType: 'labels.text.fill',
-            //     stylers: [{ color: '#9ca5b3' }]
-            // },
-            // {
-            //     featureType: 'road.highway',
-            //     elementType: 'geometry',
-            //     stylers: [{ color: '#746855' }]
-            // },
-            // {
-            //     featureType: 'road.highway',
-            //     elementType: 'geometry.stroke',
-            //     stylers: [{ color: '#1f2835' }]
-            // },
-            // {
-            //     featureType: 'road.highway',
-            //     elementType: 'labels.text.fill',
-            //     stylers: [{ color: '#f3d19c' }]
-            // },
-            // {
-            //     featureType: 'transit',
-            //     elementType: 'geometry',
-            //     stylers: [{ color: '#2f3948' }]
-            // },
-            // {
-            //     featureType: 'transit.station',
-            //     elementType: 'labels.text.fill',
-            //     stylers: [{ color: '#d59563' }]
-            // },
-            // {
-            //     featureType: 'water',
-            //     elementType: 'geometry',
-            //     stylers: [{ color: '#17263c' }]
-            // },
-            // {
-            //     featureType: 'water',
-            //     elementType: 'labels.text.fill',
-            //     stylers: [{ color: '#515c6d' }]
-            // },
-            // {
-            //     featureType: 'water',
-            //     elementType: 'labels.text.stroke',
-            //     stylers: [{ color: '#17263c' }]
-            // },
-            // **********************Dark night vision theme**********************
-            // {
-            //     "featureType": "all",
-            //     "elementType": "all",
-            //     "stylers": [
-            //         {
-            //             "invert_lightness": true
-            //         },
-            //         {
-            //             "saturation": "-9"
-            //         },
-            //         {
-            //             "lightness": "0"
-            //         },
-            //         {
-            //             "visibility": "simplified"
-            //         }
-            //     ]
-            // },
-            // {
-            //     "featureType": "landscape.man_made",
-            //     "elementType": "all",
-            //     "stylers": [
-            //         {
-            //             "weight": "1.00"
-            //         }
-            //     ]
-            // },
-            // {
-            //     "featureType": "road.highway",
-            //     "elementType": "all",
-            //     "stylers": [
-            //         {
-            //             "weight": "0.49"
-            //         }
-            //     ]
-            // },
-            // {
-            //     "featureType": "road.highway",
-            //     "elementType": "labels",
-            //     "stylers": [
-            //         {
-            //             "visibility": "on"
-            //         },
-            //         {
-            //             "weight": "0.01"
-            //         },
-            //         {
-            //             "lightness": "-7"
-            //         },
-            //         {
-            //             "saturation": "-35"
-            //         }
-            //     ]
-            // },
-            // {
-            //     "featureType": "road.highway",
-            //     "elementType": "labels.text",
-            //     "stylers": [
-            //         {
-            //             "visibility": "on"
-            //         }
-            //     ]
-            // },
-            // {
-            //     "featureType": "road.highway",
-            //     "elementType": "labels.text.stroke",
-            //     "stylers": [
-            //         {
-            //             "visibility": "on"
-            //         }
-            //     ]
-            // },
-            // {
-            //     "featureType": "road.highway",
-            //     "elementType": "labels.icon",
-            //     "stylers": [
-            //         {
-            //             "visibility": "on"
-            //         }
-            //     ]
-            // }
-        ]
-    });
-    // Place marker on lat & lng as defined above
-    var buyerLocation = new google.maps.Marker({
-        position: myLatLng,
-        map: map,
-        title: "hello"
-    });
-
-    var sellersMap = {
-        // location is Factoria
-        seller1: {
-            center: { lat: 47.5683, lng: -122.1693 },
-        },
-        // location is Kirkland
-        seller2: {
-            center: { lat: 47.6769, lng: -122.2060 }
-        }
-    };
-
-    // Add the circle for this city to the map.
-    for (var city in sellersMap) {
-        var sellerCircles = new google.maps.Circle({
-            strokeColor: '#010101',
-            strokeOpacity: 0.4,
-            strokeWeight: 1,
-            fillColor: '#fcfcfc',
-            fillOpacity: 0.35,
-            map: map,
-            center: sellersMap[city].center,
-            radius: 2000
+        // Styles a map in night mode.
+        var map = new google.maps.Map(document.getElementById('map'), {
+            center: myLatLng,
+            zoom: 11,
+            styles: [
+                // **********************Sin City theme**********************
+                {
+                    "featureType": "all",
+                    "elementType": "labels",
+                    "stylers": [
+                        {
+                            "visibility": "on"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "all",
+                    "elementType": "labels.text.fill",
+                    "stylers": [
+                        {
+                            "saturation": 36
+                        },
+                        {
+                            "color": "#000000"
+                        },
+                        {
+                            "lightness": 40
+                        }
+                    ]
+                },
+                {
+                    "featureType": "all",
+                    "elementType": "labels.text.stroke",
+                    "stylers": [
+                        {
+                            "visibility": "on"
+                        },
+                        {
+                            "color": "#000000"
+                        },
+                        {
+                            "lightness": 16
+                        }
+                    ]
+                },
+                {
+                    "featureType": "all",
+                    "elementType": "labels.icon",
+                    "stylers": [
+                        {
+                            "visibility": "on"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "administrative",
+                    "elementType": "geometry.fill",
+                    "stylers": [
+                        {
+                            "color": "#000000"
+                        },
+                        {
+                            "lightness": 20
+                        }
+                    ]
+                },
+                {
+                    "featureType": "administrative",
+                    "elementType": "geometry.stroke",
+                    "stylers": [
+                        {
+                            "color": "#000000"
+                        },
+                        {
+                            "lightness": 17
+                        },
+                        {
+                            "weight": 1.2
+                        }
+                    ]
+                },
+                {
+                    "featureType": "administrative.locality",
+                    "elementType": "labels.text.fill",
+                    "stylers": [
+                        {
+                            "color": "#c4c4c4"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "administrative.neighborhood",
+                    "elementType": "labels.text.fill",
+                    "stylers": [
+                        {
+                            "color": "#707070"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "landscape",
+                    "elementType": "geometry",
+                    "stylers": [
+                        {
+                            "color": "#000000"
+                        },
+                        {
+                            "lightness": 20
+                        }
+                    ]
+                },
+                {
+                    "featureType": "poi",
+                    "elementType": "geometry",
+                    "stylers": [
+                        {
+                            "color": "#000000"
+                        },
+                        {
+                            "lightness": 21
+                        },
+                        {
+                            "visibility": "on"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "poi.business",
+                    "elementType": "geometry",
+                    "stylers": [
+                        {
+                            "visibility": "on"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "road.highway",
+                    "elementType": "geometry.fill",
+                    "stylers": [
+                        {
+                            "color": "#be2026"
+                        },
+                        {
+                            "lightness": "0"
+                        },
+                        {
+                            "visibility": "on"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "road.highway",
+                    "elementType": "geometry.stroke",
+                    "stylers": [
+                        {
+                            "visibility": "off"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "road.highway",
+                    "elementType": "labels.text.fill",
+                    "stylers": [
+                        {
+                            "visibility": "on"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "road.highway",
+                    "elementType": "labels.text.stroke",
+                    "stylers": [
+                        {
+                            "visibility": "on"
+                        },
+                        {
+                            "hue": "#ff000a"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "road.arterial",
+                    "elementType": "geometry",
+                    "stylers": [
+                        {
+                            "color": "#000000"
+                        },
+                        {
+                            "lightness": 18
+                        }
+                    ]
+                },
+                {
+                    "featureType": "road.arterial",
+                    "elementType": "geometry.fill",
+                    "stylers": [
+                        {
+                            "color": "#575757"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "road.arterial",
+                    "elementType": "labels.text.fill",
+                    "stylers": [
+                        {
+                            "color": "#ffffff"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "road.arterial",
+                    "elementType": "labels.text.stroke",
+                    "stylers": [
+                        {
+                            "color": "#2c2c2c"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "road.local",
+                    "elementType": "geometry",
+                    "stylers": [
+                        {
+                            "color": "#000000"
+                        },
+                        {
+                            "lightness": 16
+                        }
+                    ]
+                },
+                {
+                    "featureType": "road.local",
+                    "elementType": "labels.text.fill",
+                    "stylers": [
+                        {
+                            "color": "#999999"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "road.local",
+                    "elementType": "labels.text.stroke",
+                    "stylers": [
+                        {
+                            "saturation": "-52"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "transit",
+                    "elementType": "geometry",
+                    "stylers": [
+                        {
+                            "color": "#000000"
+                        },
+                        {
+                            "lightness": 19
+                        }
+                    ]
+                },
+                {
+                    "featureType": "water",
+                    "elementType": "geometry",
+                    "stylers": [
+                        {
+                            "color": "#000000"
+                        },
+                        {
+                            "lightness": 17
+                        }
+                    ]
+                },
+                // **********************Dark Theme**********************
+                // { elementType: 'geometry', stylers: [{ color: '#242f3e' }] },
+                // { elementType: 'labels.text.stroke', stylers: [{ color: '#242f3e' }] },
+                // { elementType: 'labels.text.fill', stylers: [{ color: '#746855' }] },
+                // {
+                //     featureType: 'administrative.locality',
+                //     elementType: 'labels.text.fill',
+                //     stylers: [{ color: '#d59563' }]
+                // },
+                // {
+                //     featureType: 'poi',
+                //     elementType: 'labels.text.fill',
+                //     stylers: [{ color: '#d59563' }]
+                // },
+                // {
+                //     featureType: 'poi.park',
+                //     elementType: 'geometry',
+                //     stylers: [{ color: '#263c3f' }]
+                // },
+                // {
+                //     featureType: 'poi.park',
+                //     elementType: 'labels.text.fill',
+                //     stylers: [{ color: '#6b9a76' }]
+                // },
+                // {
+                //     featureType: 'road',
+                //     elementType: 'geometry',
+                //     stylers: [{ color: '#38414e' }]
+                // },
+                // {
+                //     featureType: 'road',
+                //     elementType: 'geometry.stroke',
+                //     stylers: [{ color: '#212a37' }]
+                // },
+                // {
+                //     featureType: 'road',
+                //     elementType: 'labels.text.fill',
+                //     stylers: [{ color: '#9ca5b3' }]
+                // },
+                // {
+                //     featureType: 'road.highway',
+                //     elementType: 'geometry',
+                //     stylers: [{ color: '#746855' }]
+                // },
+                // {
+                //     featureType: 'road.highway',
+                //     elementType: 'geometry.stroke',
+                //     stylers: [{ color: '#1f2835' }]
+                // },
+                // {
+                //     featureType: 'road.highway',
+                //     elementType: 'labels.text.fill',
+                //     stylers: [{ color: '#f3d19c' }]
+                // },
+                // {
+                //     featureType: 'transit',
+                //     elementType: 'geometry',
+                //     stylers: [{ color: '#2f3948' }]
+                // },
+                // {
+                //     featureType: 'transit.station',
+                //     elementType: 'labels.text.fill',
+                //     stylers: [{ color: '#d59563' }]
+                // },
+                // {
+                //     featureType: 'water',
+                //     elementType: 'geometry',
+                //     stylers: [{ color: '#17263c' }]
+                // },
+                // {
+                //     featureType: 'water',
+                //     elementType: 'labels.text.fill',
+                //     stylers: [{ color: '#515c6d' }]
+                // },
+                // {
+                //     featureType: 'water',
+                //     elementType: 'labels.text.stroke',
+                //     stylers: [{ color: '#17263c' }]
+                // },
+                // **********************Dark night vision theme**********************
+                // {
+                //     "featureType": "all",
+                //     "elementType": "all",
+                //     "stylers": [
+                //         {
+                //             "invert_lightness": true
+                //         },
+                //         {
+                //             "saturation": "-9"
+                //         },
+                //         {
+                //             "lightness": "0"
+                //         },
+                //         {
+                //             "visibility": "simplified"
+                //         }
+                //     ]
+                // },
+                // {
+                //     "featureType": "landscape.man_made",
+                //     "elementType": "all",
+                //     "stylers": [
+                //         {
+                //             "weight": "1.00"
+                //         }
+                //     ]
+                // },
+                // {
+                //     "featureType": "road.highway",
+                //     "elementType": "all",
+                //     "stylers": [
+                //         {
+                //             "weight": "0.49"
+                //         }
+                //     ]
+                // },
+                // {
+                //     "featureType": "road.highway",
+                //     "elementType": "labels",
+                //     "stylers": [
+                //         {
+                //             "visibility": "on"
+                //         },
+                //         {
+                //             "weight": "0.01"
+                //         },
+                //         {
+                //             "lightness": "-7"
+                //         },
+                //         {
+                //             "saturation": "-35"
+                //         }
+                //     ]
+                // },
+                // {
+                //     "featureType": "road.highway",
+                //     "elementType": "labels.text",
+                //     "stylers": [
+                //         {
+                //             "visibility": "on"
+                //         }
+                //     ]
+                // },
+                // {
+                //     "featureType": "road.highway",
+                //     "elementType": "labels.text.stroke",
+                //     "stylers": [
+                //         {
+                //             "visibility": "on"
+                //         }
+                //     ]
+                // },
+                // {
+                //     "featureType": "road.highway",
+                //     "elementType": "labels.icon",
+                //     "stylers": [
+                //         {
+                //             "visibility": "on"
+                //         }
+                //     ]
+                // }
+            ]
         });
+        // Place marker on lat & lng as defined above
+        var buyerLocation = new google.maps.Marker({
+            position: myLatLng,
+            map: map,
+            title: "hello"
+        });
+
+        var sellersMap = {
+            // location is Factoria
+            seller1: {
+                center: { lat: 47.5683, lng: -122.1693 },
+            },
+            // location is Kirkland
+            seller2: {
+                center: { lat: 47.6769, lng: -122.2060 }
+            }
+        };
+
+        // Add the circle for this city to the map.
+        for (var city in sellersMap) {
+            var sellerCircles = new google.maps.Circle({
+                strokeColor: '#010101',
+                strokeOpacity: 0.4,
+                strokeWeight: 1,
+                fillColor: '#fcfcfc',
+                fillOpacity: 0.35,
+                map: map,
+                center: sellersMap[city].center,
+                radius: 2000
+            });
+        }
     }
-}
 </script> --}}
 {{!-- Link to Google Maps API --}}
-<script async defer
-  src="https://maps.googleapis.com/maps/api/js?key=&callback=initMap" async
-  defer></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=&callback=initMap" async defer></script>
 
-  {{!-- <script src="/business/map.js"></script> --}}
+{{!-- <script src="/business/map.js"></script> --}}
 
-  <script src="./js/listings.js"></script>
+<script src="./js/listings.js"></script>
