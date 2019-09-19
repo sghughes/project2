@@ -47,7 +47,7 @@ module.exports = {
         // Only include min/max price if not free
         const min = parseFloat(params.minPrice);
         const max = parseFloat(params.maxPrice);
-        const free = params.freeOnly === true || params.freeOnly === 'true';
+        const free = params.freeOnly === true || params.freeOnly === 'true' || params.freeOnly === 'on';
         if (free) {
             searchCriteria.isFree = true;
         } else if (!Number.isNaN(min) && !Number.isNaN(max) && max > 0.0) {
