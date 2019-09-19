@@ -1,3 +1,14 @@
+// Update nav active item
+function updateNavActiveItem(page) {
+    const navItems = document.querySelectorAll('.nav-item');
+    navItems.forEach(item => item.classList.remove('active'));
+    navItems.forEach(item => {
+        if (item.id === `nav-${page}`) {
+            item.classList.add('active');
+        }
+    });
+}
+
 // Get the current location of the user.
 function getUserLocation() {
     let location = {};
