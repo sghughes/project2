@@ -47,5 +47,7 @@ Object.keys(db).forEach(function(modelName) {
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
+db.DataTypes = Sequelize.DataTypes;
+db.Op = Sequelize.Op;
 
 module.exports = db;
