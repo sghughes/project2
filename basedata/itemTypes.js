@@ -1,6 +1,6 @@
 // properties
 const SIZES = ['xs', 's', 'm', 'l', 'xl'];
-const CATEGORIES = ['tops', 'pants', 'sweaters', 'dresses'];
+const TYPES = ['shirts', 'jackets', 'pants', 'sweaters', 'dresses', 'shorts', 'skirts'];
 const COLORS = [
     'black',
     'white',
@@ -11,6 +11,7 @@ const COLORS = [
     'brown',
     'purple',
     'orange',
+    'tan',
     'other'
 ];
 
@@ -19,7 +20,7 @@ const CLOTHING = {
     name: 'clothing',
     properties: new Map([
         ['size', SIZES],
-        ['category', CATEGORIES],
+        ['category', TYPES],
         ['color', COLORS],
         ['gender', ['na','mens', 'womens']]
     ])
