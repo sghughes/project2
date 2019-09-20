@@ -9,7 +9,7 @@ module.exports = function(sequelize, DataTypes) {
             primaryKey: true
         },
         milesText: {
-            type: DataTypes.DOUBLE,
+            type: DataTypes.STRING,
             allowNull: true
         },
         milesValue: {
