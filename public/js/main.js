@@ -8,6 +8,7 @@ function updateNavActiveItem(page) {
             item.classList.add('active');
         }
     });
+}
 
 // Display current location in navbar
 function updateCurrentLocation(location) {
@@ -21,7 +22,6 @@ function updateCurrentLocation(location) {
         locationElm.classList.add('hiddeninput');
         locationName.innerHTML = '';
     }
-
 }
 
 // Get the current location of the user.
@@ -80,7 +80,6 @@ function getUserLocation() {
 
 // Open a prompt to get user zip code
 function promptForZip() {
-
 
     // Prompt for valid zip code until given
     alertify
