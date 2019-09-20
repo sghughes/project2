@@ -4,9 +4,9 @@ TRUNCATE locations;
 TRUNCATE listings;
 
 -- Locations seed data
-INSERT INTO locations(zipcode,longitude,latitude,createdAt,updatedAt)
-VALUES (98052,-122.1238767,47.6694141,CURRENT_DATE,CURRENT_DATE),
-(98005,-122.1607932,47.6215654,CURRENT_DATE,CURRENT_DATE);
+INSERT INTO locations(zipcode,longitude,latitude,name,createdAt,updatedAt)
+VALUES (98052,-122.1238767,47.6694141,'Redmond, WA',CURRENT_DATE,CURRENT_DATE),
+(98005,-122.1607932,47.6215654,'Bellevue, WA',CURRENT_DATE,CURRENT_DATE);
 
 -- Listings seed data
 INSERT INTO listings (title, description, image, itemQuality, properties, price, contactZip, contactEmail, ItemTypeName, createdAt, updatedAt)
