@@ -1,45 +1,22 @@
 module.exports = function(sequelize, DataTypes) {
-    var Distance = sequelize.define(
-        'Distance',
-        {
-            zipSrc: {
-                type: DataTypes.INTEGER,
-                primaryKey: true
-            },
-            zipDest: {
-                type: DataTypes.INTEGER,
-                primaryKey: true
-            },
-            latSrc: {
-                type: DataTypes.DOUBLE,
-                allowNull: false
-            },
-            lngSrc: {
-                type: DataTypes.DOUBLE,
-                allowNull: false
-            },
-            latDest: {
-                type: DataTypes.DOUBLE,
-                allowNull: false
-            },
-            lngDest: {
-                type: DataTypes.DOUBLE,
-                allowNull: false
-            },
-            miles: {
-                type: DataTypes.DOUBLE,
-                allowNull: true
-            }
+    var Distance = sequelize.define('Distance', {
+        zipSrc: {
+            type: DataTypes.INTEGER,
+            primaryKey: true
         },
-        {
-            indexes: [
-                {
-                    name: 'dist_index',
-                    fields: ['latSrc', 'lngSrc', 'latDest', 'lngDest']
-                }
-            ]
+        zipDest: {
+            type: DataTypes.INTEGER,
+            primaryKey: true
+        },
+        milesText: {
+            type: DataTypes.DOUBLE,
+            allowNull: true
+        },
+        milesValue: {
+            type: DataTypes.DOUBLE,
+            allowNull: false
         }
-    );
+    });
 
     return Distance;
 };
