@@ -92,3 +92,9 @@ body {
     height: 50px;
     width: auto;
 }
+
+@media screen and (max-width: 768px) {
+    #logo {
+        display: none;
+    }
+}
