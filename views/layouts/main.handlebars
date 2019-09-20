@@ -29,13 +29,13 @@
         <a class="navbar-brand" href="/"><img src="/images/logo2.png" id="logo"></a>
         <div class="collapse navbar-collapse justify-content-between" id="navbarToggle">
             <ul class="navbar-nav mt-2 mt-lg-0">
-                <li class="nav-item active">
+                <li id="nav-buy" class="nav-item">
                     <a class="nav-link" href="/listings">Buy</a>
                 </li>
-                <li class="nav-item">
+                <li id="nav-sell" class="nav-item">
                     <a class="nav-link" href="/form">Sell</a>
                 </li>
-                <li class="nav-item">
+                <li id="nav-manage" class="nav-item">
                     <a class="nav-link" href="/manage">Manage</a>
                 </li>
             </ul>
@@ -43,7 +43,9 @@
                 <div class="input-group w-100">
                     <input id="input-search" type="text" class="form-control" placeholder="Search" name="item">
                     <div class="input-group-append">
-                        <button id="btn-search" class="btn btn-outline-success"><i class="fas fa-search"></i></button>
+
+                        <button id="btn-search" class="btn btn-outline-primary" type="button"><i class="fas fa-search"></i></button>
+
                     </div>
                 </div>
             </form>

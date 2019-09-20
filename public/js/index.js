@@ -1,6 +1,8 @@
 
 $(document).ready(function() {
 
+  updateNavActiveItem('sell');
+
 
   // Adding an event listener for when the form is submitted
   $(".newItem").on("submit", function handleFormSubmit(event) {
