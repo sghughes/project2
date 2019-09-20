@@ -1,3 +1,14 @@
+
+// Update nav active item
+function updateNavActiveItem(page) {
+    const navItems = document.querySelectorAll('.nav-item');
+    navItems.forEach(item => item.classList.remove('active'));
+    navItems.forEach(item => {
+        if (item.id === `nav-${page}`) {
+            item.classList.add('active');
+        }
+    });
+
 // Display current location in navbar
 function updateCurrentLocation(location) {
     const locationElm = document.querySelector('#current-location');
@@ -10,6 +21,7 @@ function updateCurrentLocation(location) {
         locationElm.classList.add('hiddeninput');
         locationName.innerHTML = '';
     }
+
 }
 
 // Get the current location of the user.

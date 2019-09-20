@@ -27,6 +27,9 @@ function resetFilters() {
 // Add event listeners and perform necessary initializtion
 // once page content is loaded.
 document.addEventListener('DOMContentLoaded', () => {
+
+    updateNavActiveItem('buy');
+
     // Get distance slider and distOutput field
     const distSlider = document.querySelector('#range-distance');
     const distLabel = document.querySelector('#label-distance');
