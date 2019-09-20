@@ -1,8 +1,13 @@
+const db = require('../models');
 const crypto = require('crypto');
 const moment = require('moment');
 const Op = require('sequelize').Op;
+const mapsClient = require('@google/maps').createClient({
+    key: process.env.GMAPS_KEY,
+    Promise: Promise
+});
 
-const QUALITY = ['','New','Great','Used','Worn','Damaged'];
+const QUALITY = ['', 'New', 'Great', 'Used', 'Worn', 'Damaged'];
 
 module.exports = {
     // Generates a random 8 character string
@@ -47,7 +52,10 @@ module.exports = {
         // Only include min/max price if not free
         const min = parseFloat(params.minPrice);
         const max = parseFloat(params.maxPrice);
-        const free = params.freeOnly === true || params.freeOnly === 'true' || params.freeOnly === 'on';
+        const free =
+            params.freeOnly === true ||
+            params.freeOnly === 'true' ||
+            params.freeOnly === 'on';
         if (free) {
             searchCriteria.isFree = true;
         } else if (!Number.isNaN(min) && !Number.isNaN(max) && max > 0.0) {
@@ -60,9 +68,7 @@ module.exports = {
         return searchCriteria;
     },
     formatListingObjects: function(listings) {
-
         return listings.map(listing => {
-
             let title = listing.title;
             if (listing.properties.size) {
                 title += ` (${listing.properties.size.toUpperCase()})`;
@@ -105,5 +111,54 @@ module.exports = {
                         </div>
                     </a>
                 {{/each}}`;
+    },
+    getDistanceBetween(zipSrc, zipDest) {
+        return new Promise((resolve, reject) => {
+            if (!zipSrc || !zipDest) {
+                reject('Required zip code params missing.');
+                return;
+            }
+
+            // First check Distance table for information
+            db.Distance.findOne({
+                where: {
+                    [db.Op.and]: {
+                        zipSrc: zipSrc,
+                        zipDest: zipDest
+                    }
+                }
+            }).then(data => {
+                if (data) {
+                    resolve(data);
+                    return;
+                }
+
+                // Look up distance info from google maps api
+                mapsClient
+                    .distanceMatrix({
+                        origins: zipSrc,
+                        destinations: zipDest,
+                        units: 'imperial'
+                    })
+                    .asPromise()
+                    .then(data => {
+                        const dist = data.json.rows[0].elements[0].distance;
+                        const miles = parseFloat(dist.value) / 1609.344;
+                        const milesText = dist.text.trim();
+
+                        const distanceInfo = {
+                            zipSrc: zipSrc,
+                            zipDest: zipDest,
+                            milesText: milesText,
+                            milesValue: miles
+                        };
+
+                        // Add distance info to db then return
+                        db.Distance.create(distanceInfo);
+
+                        resolve(distanceInfo);
+                    });
+            });
+        });
     }
 };

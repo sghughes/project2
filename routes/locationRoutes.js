@@ -1,4 +1,5 @@
 var db = require('../models');
+const helper = require('../business/helpers');
 const mapsClient = require('@google/maps').createClient({
     key: process.env.GMAPS_KEY,
     Promise: Promise
@@ -173,46 +174,20 @@ module.exports = function(app) {
             return;
         }
 
-        // First check Distance table for information
-        db.Distance.findOne({
-            where: {
-                [db.Op.and]: {
-                    zipSrc: zipSrc,
-                    zipDest: zipDest
-                }
-            }
-        }).then(data => {
-            if (data) {
-                res.status(200).json(data);
-                return;
-            }
+        helper
+            .getDistanceBetween(zipSrc, zipDest)
+            .then(data => res.json(data))
+            .catch(err => {
+                console.log(err);
+                res.status(500).send(err);
+            });
+    });
 
-            // Look up distance info from google maps api
-            mapsClient
-                .distanceMatrix({
-                    origins: zipSrc,
-                    destinations: zipDest,
-                    units: 'imperial'
-                })
-                .asPromise()
-                .then(data => {
-                    const dist = data.json.rows[0].elements[0].distance;
-                    const miles = parseFloat(dist.value) / 1609.344;
-                    const milesText = dist.text.trim();
-
-                    const distanceInfo = {
-                        zipSrc: zipSrc,
-                        zipDest: zipDest,
-                        milesText: milesText,
-                        milesValue: miles
-                    };
-
-                    // Add distance info to db then return
-                    db.Distance.create(distanceInfo);
-
-                    res.status(201).json(distanceInfo);
-                })
-                .catch(err => console.log(err));
-        });
+    app.post('/api/distance/filter', (req, res) => {
+        const listings = req.body;
+        if (!listings) {
+            res.code(400).send('Missing listing data.');
+            return;
+        }
     });
 };
