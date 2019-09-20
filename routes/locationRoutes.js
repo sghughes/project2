@@ -86,7 +86,7 @@ module.exports = function(app) {
         // First check DB to see if we have a stored location
         db.Location.findOne({
             where: {
-                [db.Op.and] : {
+                [db.Op.and]: {
                     latitude: lat,
                     longitude: lng
                 }
@@ -100,58 +100,119 @@ module.exports = function(app) {
 
             // If not, then use google maps API to look up location info
             mapsClient
-            .reverseGeocode({
-                latlng: [lat, lng]
-            })
-            .asPromise()
-            .then(response => {
-                if (response.status !== 200) {
-                    res.status(response.status);
-                    return;
-                } else if (response.json.results.length === 0) {
-                    res.status(404).send(
-                        `Reverse geocode lookup failed for (lat,lng) ${lat},${lng}`
-                    );
-                    return;
-                }
-
-                // We found geocode data, now add to DB for future use, then return as json.
-                const addressData = response.json.results[0].address_components;
-                const zipData = addressData.find(a => a.types && a.types[0] === 'postal_code');
-                const cityData = addressData.find(a => a.types && a.types[0] === 'locality');
-                const stateData = addressData.find(a => a.types && a.types[0] === 'administrative_area_level_1');
-
-                // If we have all required information, then find or create associated Location record
-                if (zipData && cityData && stateData) {
-                    const location = {
-                        zipcode: parseInt(zipData.short_name),
-                        latitude: lat,
-                        longitude: lng,
-                        name: `${cityData.short_name}, ${stateData.long_name}`
+                .reverseGeocode({
+                    latlng: [lat, lng]
+                })
+                .asPromise()
+                .then(response => {
+                    if (response.status !== 200) {
+                        res.status(response.status);
+                        return;
+                    } else if (response.json.results.length === 0) {
+                        res.status(404).send(
+                            `Reverse geocode lookup failed for (lat,lng) ${lat},${lng}`
+                        );
+                        return;
                     }
 
-                    db.Location.findOne({
-                        where: {
-                            zipcode: location.zipcode
-                        }
-                    }).then(data => {
-                        if (data) {
-                            data.update(location);
-                        } else {
-                            db.Location.create(location);
-                        }
+                    // We found geocode data, now add to DB for future use, then return as json.
+                    const addressData =
+                        response.json.results[0].address_components;
+                    const zipData = addressData.find(
+                        a => a.types && a.types[0] === 'postal_code'
+                    );
+                    const cityData = addressData.find(
+                        a => a.types && a.types[0] === 'locality'
+                    );
+                    const stateData = addressData.find(
+                        a =>
+                            a.types &&
+                            a.types[0] === 'administrative_area_level_1'
+                    );
 
-                        res.json(location);
-                    });
-                }
-            })
-            .catch(err => {
-                console.log(err);
-                res.status(500).send(
-                    'Error processing google maps reverse geocode request.'
-                );
-            });
+                    // If we have all required information, then find or create associated Location record
+                    if (zipData && cityData && stateData) {
+                        const location = {
+                            zipcode: parseInt(zipData.short_name),
+                            latitude: lat,
+                            longitude: lng,
+                            name: `${cityData.short_name}, ${stateData.long_name}`
+                        };
+
+                        db.Location.findOne({
+                            where: {
+                                zipcode: location.zipcode
+                            }
+                        }).then(data => {
+                            if (data) {
+                                data.update(location);
+                            } else {
+                                db.Location.create(location);
+                            }
+
+                            res.json(location);
+                        });
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                    res.status(500).send(
+                        'Error processing google maps reverse geocode request.'
+                    );
+                });
         });
+    });
 
+    // Currently looks up distance between two zip codes
+    app.get('/api/distance', (req, res) => {
+        const zipSrc = req.query.zipSrc;
+        const zipDest = req.query.zipDest;
+
+        if (!zipSrc || !zipDest) {
+            res.status(400).send('Required zip code params missing.');
+            return;
+        }
+
+        // First check Distance table for information
+        db.Distance.findOne({
+            where: {
+                [db.Op.and]: {
+                    zipSrc: zipSrc,
+                    zipDest: zipDest
+                }
+            }
+        }).then(data => {
+            if (data) {
+                res.status(200).json(data);
+                return;
+            }
+
+            // Look up distance info from google maps api
+            mapsClient
+                .distanceMatrix({
+                    origins: zipSrc,
+                    destinations: zipDest,
+                    units: 'imperial'
+                })
+                .asPromise()
+                .then(data => {
+                    const dist = data.json.rows[0].elements[0].distance;
+                    const miles = parseFloat(dist.value) / 1609.344;
+                    const milesText = dist.text.trim();
+
+                    const distanceInfo = {
+                        zipSrc: zipSrc,
+                        zipDest: zipDest,
+                        milesText: milesText,
+                        milesValue: miles
+                    };
+
+                    // Add distance info to db then return
+                    db.Distance.create(distanceInfo);
+
+                    res.status(201).json(distanceInfo);
+                })
+                .catch(err => console.log(err));
+        });
     });
 };
