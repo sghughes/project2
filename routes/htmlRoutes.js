@@ -11,8 +11,8 @@ module.exports = function(app) {
         res.render('index');
     });
 
-    app.get('/form', function(req, res) {
-        res.render('form');
+    app.get('/sell', function(req, res) {
+        res.render('sell');
     });
 
     app.get('/formConfirmation', function(req, res) {
