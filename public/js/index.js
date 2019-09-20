@@ -43,8 +43,12 @@ $(document).ready(function() {
 
   function submitPost(Listing) {
     $.post("/api/listings/", Listing, function(data) {
-      window.location.href = "/formConfirmation";
       console.log(data)
+      alertify.alert('Item Posted', 'Thank you. our item has now been posted. Your seller ID is ' + data + '. Please save this ID for managing your item posting.', 
+      function(){
+        alertify.success('ok');
+        window.location.href = "/";
+      });
     });
   };
 

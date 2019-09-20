@@ -59,7 +59,8 @@ module.exports = function(app) {
             sellerId: newSellerId
         })
             .then(function(dbPost) {
-                res.render('formConfirmation', { id: dbPost.sellerId })
+                //res.render('formConfirmation', { id: dbPost.sellerId })
+                res.status(200).send(dbPost.sellerId)
             });
     });
 
