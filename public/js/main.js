@@ -129,43 +129,39 @@ function promptForZip() {
         .show();
 }
 
+async function searchListings() {
+
+    // Get search input
+    const searchItem = document.querySelector('#input-search').value.trim();
+
+    // Check to see if filters are defined (from separate view).
+    // If found, append to API request query string
+    let searchParams = `?item=${searchItem}`;
+    if (typeof Filters !== 'undefined') {
+        Object.entries(Filters).forEach(([key, value]) => {
+            searchParams += `&${key}=${value}`;
+        });
+    }
+
+    // Perform GET request to find matching listings
+    try {
+        const response = await fetch('/listings/search' + searchParams);
+        const text = await response.text();
+        document.querySelector('#search-results').innerHTML = text;
+    } catch (err) {
+        console.log('ERROR searching for listings', err, searchParams);
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     // Determine location of user
     getUserLocation();
 
     // Search button click event handler
     const searchButton = document.querySelector('#btn-search');
-    searchButton.addEventListener('click', async evt => {
+    searchButton.addEventListener('click', evt => {
         // Prevent form submission
         evt.preventDefault();
-
-        // Make sure search input is supplied. If not, do nothing (exit early)
-        const searchItem = document.querySelector('#input-search').value.trim();
-        if (searchItem === '') {
-            return;
-        }
-
-        // Check to see if filters are defined (from separate view).
-        // If found, append to API request query string
-        let searchParams = `?item=${searchItem}`;
-        if (typeof Filters !== 'undefined') {
-            Object.entries(Filters).forEach(([key, value]) => {
-                searchParams += `&${key}=${value}`;
-            });
-        }
-
-        // Perform GET request to find matching listings
-        try {
-            const response = await fetch('/api/listings' + searchParams);
-            const data = await response.json();
-
-            // Fire new ListingSearch event for Listeners to handle
-            const searchEvent = new CustomEvent('ListingSearch', {
-                detail: data
-            });
-            this.dispatchEvent(searchEvent);
-        } catch (err) {
-            console.log('ERROR searching for listings', err);
-        }
+        searchListings();
     });
 });

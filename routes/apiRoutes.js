@@ -1,57 +1,5 @@
 const db = require('../models');
-const Op = require('sequelize').Op;
-const crypto = require('crypto');
-
-function getSearchCriteria(params) {
-    // Init with search term and active
-    const searchCriteria = {
-        title: {
-            [Op.or]: {
-                [Op.eq]: params.item,
-                [Op.substring]: params.item
-            }
-        },
-        active: true,
-        properties: {}
-    };
-
-    // Check remaining filter values and include as needed
-    const quality = parseInt(params.itemQuality);
-    if (quality !== 0) {
-        searchCriteria.itemQuality = quality;
-    }
-    if (params.gender !== 'all') {
-        searchCriteria.properties.gender = params.gender;
-    }
-    if (params.type !== 'all') {
-        searchCriteria.properties.type = params.type;
-    }
-    if (params.size !== 'all') {
-        searchCriteria.properties.size = params.size;
-    }
-    if (params.color !== 'all') {
-        searchCriteria.properties.color = params.color;
-    }
-    // Only include min/max price if not free
-    const min = parseFloat(params.minPrice);
-    const max = parseFloat(params.maxPrice);
-    const free = params.freeOnly === true || params.freeOnly === 'true';
-    if (free) {
-        searchCriteria.isFree = true;
-    } else if (max > 0.0) {
-        searchCriteria.price = {
-            [Op.gte]: min,
-            [Op.lte]: max
-        };
-    }
-
-    return searchCriteria;
-}
-
-// Generates a random 8 character string
-function getRandomString() {
-    return crypto.randomBytes(4).toString('hex').toUpperCase();
-}
+const helper = require('../business/helpers')
 
 module.exports = function(app) {
     // GET routes
@@ -62,7 +10,7 @@ module.exports = function(app) {
     });
 
     app.get('/api/listings', function(req, res) {
-        const searchCriteria = getSearchCriteria(req.query);
+        const searchCriteria = helper.getSearchCriteria(req.query);
 
         db.Listing.findAll({
             where: searchCriteria
@@ -89,11 +37,11 @@ module.exports = function(app) {
             return;
         }
 
-        var newSellerId = getRandomString();
+        var newSellerId = helper.getRandomString();
 
         const data = req.body;
 
-        const itemProps = {};//JSON.parse(data.properties);
+        const itemProps = JSON.parse(data.properties);
 
         db.Listing.create({
             title: data.title,

@@ -6,7 +6,7 @@ body {
     font-family: 'Source Sans Pro', sans-serif;
 }
 .big-banner {
-    background-image: url(../assets/images/jumbo4.jpg);
+    background-image: url(/images/banner.jpg);
     /* background-size: 100%; */
     background-repeat: no-repeat;
     background-size: cover;
@@ -38,6 +38,25 @@ body {
 .card {
     width: 16rem;
     margin: 5px;
+}
+
+.listing-card {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    text-transform: none;
+    color: inherit;
+    transition: 200ms linear;
+}
+.listing-card:hover {
+    text-decoration: none;
+    text-transform: none;
+    background-color: lightblue;
+}
+
+.listing-time {
+    position: absolute;
+    bottom: 0;
 }
 
 .card-img-top {
