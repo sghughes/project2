@@ -1,13 +1,13 @@
 // Display current location in navbar
 function updateCurrentLocation(location) {
-    const locationDiv = document.querySelector('#current-location');
+    const locationElm = document.querySelector('#current-location');
     const locationName = document.querySelector('#location-name');
 
     if (location && location.name) {
-        locationDiv.classList.remove('hiddeninput');
+        locationElm.classList.remove('hiddeninput');
         locationName.innerHTML = ' ' + location.name;
     } else {
-        locationDiv.classList.add('hiddeninput');
+        locationElm.classList.add('hiddeninput');
         locationName.innerHTML = '';
     }
 }
@@ -19,7 +19,7 @@ function getUserLocation() {
     const storedLocation = sessionStorage.getItem('location');
     try {
         const parsed = JSON.parse(storedLocation);
-        if (parsed) {
+        if (parsed && parsed.name) {
             updateCurrentLocation(parsed);
             return;
         }
