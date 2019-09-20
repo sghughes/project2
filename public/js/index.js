@@ -3,22 +3,19 @@ $(document).ready(function() {
 
   updateNavActiveItem('sell');
 
+
   // Adding an event listener for when the form is submitted
   $(".newItem").on("submit", function handleFormSubmit(event) {
     event.preventDefault();
 
+    var checkBox ;
+    if($("#newItemPrice").val().trim()==0) {
+      checkBox ==true;
+    }
+    else {
+      checkBox ==false;
+    };
 
-  //   function makeid(length) {
-  //     var result = '';
-  //     var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  //     var charactersLength = characters.length;
-  //     for ( var i = 0; i < length; i++ ) {
-  //        result += characters.charAt(Math.floor(Math.random() * charactersLength));
-  //     }
-  //     return result;
-  //  }
-  //  var sellerID = makeid(5);
-  //  console.log(sellerID);
 
    var itemProps = {
       size: $('#newItemSize').val().toLowerCase(),
@@ -27,21 +24,20 @@ $(document).ready(function() {
       gender: $('#newItemGender').val().toLowerCase()
    };
 
-
     // Constructing a newPost object to hand to the database
     var newPost = {
       title: $("#newItemTitle").val().trim(),
       description: $("#newItemDescription").val().trim(),
       image: $('#newItemImageUrl').val().trim(),
-      itemQuality: $("#newItemCondition").val(),
+      itemQuality: $("#itemQuality").val(),
       properties: JSON.stringify(itemProps),
+      isFree: checkBox,
       price: $("#newItemPrice").val().trim(),
       contactZip: $("#newItemZipCode").val().trim(),
-      isFree: false,
       contactEmail: $("#email").val().trim(),
       contactPhone: $("#phone").val().trim(),
     };
-    //alert('Thank you for posting an item. Your seller ID is ' + sellerID + '. Please save this ID as it will be required to remove your posting.')
+   
     console.log(newPost);
     submitPost(newPost);
 
@@ -49,7 +45,6 @@ $(document).ready(function() {
     $.post("/api/listings/", Listing, function(data) {
       window.location.href = "/formConfirmation";
       console.log(data)
-
     });
   };
 
@@ -73,8 +68,15 @@ $(document).ready(function() {
     .then(function(){
       console.log('this post has been deleted')
       //need to make this a new view
-      window.location.href = "/manage";
-      alert('Thanks. Your post has been removed.')
+
+      //window.location.href = "/manage";
+      // alert('Thanks. Your post has been removed.')
+      alertify.alert('Item Removed', 'Thank you. Your post has been deleted from Online Garage Sale.', 
+      function(){
+        alertify.success('ok');
+        window.location.href = "/";
+      });
+
     })
   };
 
@@ -97,6 +99,21 @@ $(document).ready(function() {
       }
     });
 
+  // Free only checkbox
+  //  const freeCheckbox = document.querySelector('#newIsFree');
+  $('#newFreeItem').on('click', function(){
+    console.log('clicked1')
+    var check = $(this).prop('checked');
+     if (check == true) {
+       $('#newFreeItem').val(true);
+       console.log($('#newFreeItem').val());
+       newPriceInput.classList.add('disabledinput');
+
+    } 
+    // else {
+    //  newPriceInput.classList.remove('disabledinput');
+    // }
+  });
 
 
 
