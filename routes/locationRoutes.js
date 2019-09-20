@@ -183,11 +183,22 @@ module.exports = function(app) {
             });
     });
 
-    app.post('/api/distance/filter', (req, res) => {
+    app.post('/api/distance/filtered', (req, res) => {
         const listings = req.body;
         if (!listings) {
             res.code(400).send('Missing listing data.');
             return;
         }
+
+        const currentZip = parseInt(req.query.zipSrc);
+        const maxDist = parseInt(req.query.maxDist);
+
+        helper
+            .filterByDistance(listings, currentZip, maxDist)
+            .then(filtered => res.json(filtered))
+            .catch(err => {
+                console.log(err);
+                res.status(500).send(err);
+            });
     });
 };

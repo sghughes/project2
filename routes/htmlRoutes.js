@@ -15,9 +15,9 @@ module.exports = function(app) {
         res.render('form');
     });
 
-  app.get("/formConfirmation", function(req, res) {
-    res.render("formConfirmation");
-  });
+    app.get('/formConfirmation', function(req, res) {
+        res.render('formConfirmation');
+    });
 
     app.get('/manage', function(req, res) {
         res.render('manage');
@@ -29,30 +29,44 @@ module.exports = function(app) {
         db.Listing.findAll({
             where: searchCriteria
         }).then(listings => {
-          res.render('listings', {
-            results: helper.formatListingObjects(listings),
-            layout: 'main'
-          });
+            res.render('listings', {
+                results: helper.formatListingObjects(listings),
+                layout: 'main'
+            });
         });
     });
 
     app.get('/listings/search', function(req, res) {
-      const searchCriteria = helper.getSearchCriteria(req.query);
+        const searchCriteria = helper.getSearchCriteria(req.query);
 
-      db.Listing.findAll({
-          where: searchCriteria
-      }).then(listings => {
+        db.Listing.findAll({
+            where: searchCriteria
+        }).then(listings => {
+            const currentZip = parseInt(req.query.zipSrc);
+            const maxDist = parseInt(req.query.distance);
 
-        const partial = handlebars.compile(resultsPartial);
-        const html = partial({
-          results: helper.formatListingObjects(listings),
-          layout: 'results'
+            helper
+                .filterByDistance(listings, currentZip, maxDist)
+                .then(listings => {
+                    const filtered = listings.filter(
+                        l => l.include && l.include === true
+                    );
+
+                    const partial = handlebars.compile(resultsPartial);
+                    const html = partial({
+                        results: helper.formatListingObjects(filtered),
+                        layout: 'results'
+                    });
+
+                    res.set('Content-Type', 'text/html');
+                    res.status(200).send(html);
+                })
+                .catch(err => {
+                    console.log('Error filtering search results...', err);
+                    res.status(500).send('Error retrieving search results.');
+                });
         });
-
-        res.set('Content-Type', 'text/html');
-        res.status(200).send(html);
-      });
-  });
+    });
 
     app.get('/listings/:id', function(req, res) {
         db.Listing.findOne({ where: { id: req.params.id } }).then(function(

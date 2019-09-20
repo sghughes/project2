@@ -153,12 +153,41 @@ module.exports = {
                             milesValue: miles
                         };
 
-                        // Add distance info to db then return
-                        db.Distance.create(distanceInfo);
-
-                        resolve(distanceInfo);
+                        db.Distance.findOrCreate({
+                            where: {
+                                [db.Op.and]: {
+                                    zipSrc: zipSrc,
+                                    zipDest: zipDest
+                                }
+                            },
+                            defaults: {
+                                zipSrc: zipSrc,
+                                zipDest: zipDest,
+                                milesText: distanceInfo.milesText,
+                                milesValue: distanceInfo.milesValue
+                            }
+                        }).then(() => {
+                            resolve(distanceInfo);
+                        });
                     });
             });
         });
+    },
+    filterByDistance: function(listings, zip, maxDist) {
+        let promises = listings.map(
+            listing =>
+                new Promise((res, rej) => {
+                    this.getDistanceBetween(zip, listing.contactZip).then(
+                        distData => {
+                            let inRange = distData.milesValue <= maxDist;
+                            listing.include = maxDist === 0 || inRange;
+                            listing.miles = distData.milesValue.toFixed(1);
+                            res(listing);
+                        }
+                    );
+                })
+        );
+
+        return Promise.all(promises);
     }
 };

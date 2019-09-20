@@ -148,7 +148,7 @@ async function searchListings() {
     const location = getUserLocation();
 
     // Create the search parameter query string
-    let searchParams = `?item=${searchItem}&zip=${location.zipcode}`;
+    let searchParams = `?item=${searchItem}&zipSrc=${location.zipcode}`;
     if (typeof Filters !== 'undefined') {
         Object.entries(Filters).forEach(([key, value]) => {
             searchParams += `&${key}=${value}`;
