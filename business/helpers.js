@@ -86,14 +86,24 @@ module.exports = {
                 description: listing.description,
                 isFree: listing.isFree,
                 price: priceCond,
-                created: `Listed ${moment(listing.createdAt).fromNow()}`
+                created: `Listed ${moment(listing.createdAt).fromNow()}`,
+                miles: listing.miles,
+                quality: QUALITY[listing.itemQuality],
+                priceUSD: `${listing.price.toFixed(2)}`
             };
         });
     },
+    getItemCondition(condition) {
+        const value = parseInt(condition);
+        if (value && Number.isInteger(value)) {
+            return QUALITY[value];
+        }
+        return 'Unknown';
+    },
     getResultsTemplate: function() {
-        return `{{#each results}}
-                    <a href="/listings/{{ id }}" class="listing-card">
-                        <div class="card">
+        return `{{#each data.results}}
+                    <a href="/listings/{{ id }}?location={{ ../data.zip }}" class="listing-card">
+                        <div class="card result">
                             <h5 class="card-header text-capitalize">{{ title }}</h5>
                             <img src="{{ image }}" alt="listing image" class="card-img-top">
                             <div class="card-body">
@@ -111,6 +121,21 @@ module.exports = {
                         </div>
                     </a>
                 {{/each}}`;
+    },
+    getMapFrameTemplate: function() {
+        return `<div class="card">
+                    <div class="card-header font-weight-bold">
+                        {{#if directions}}
+                            Directions
+                        {{else}}
+                            Location
+                        {{/if}}
+                    </div>
+                    <div class="card-body p-0">
+                        <iframe width="100%" height="450" frameborder="0" style="border:0"
+                        src="{{ mapSource }}"></iframe>
+                    </div>
+                </div>`;
     },
     getDistanceBetween(zipSrc, zipDest) {
         return new Promise((resolve, reject) => {
@@ -189,5 +214,17 @@ module.exports = {
         );
 
         return Promise.all(promises);
+    },
+    buildMapSource(fromZip, toZip) {
+        const apiKey = process.env.GMAPS_KEY;
+        let mapsUrl = 'https://www.google.com/maps/embed/v1/';
+        let params;
+        if (!fromZip || fromZip === '' || fromZip === 0 || fromZip == toZip) {
+            params = `place?q=${toZip}`;
+        } else {
+            params = `directions?origin=${fromZip}&destination=${toZip}`;
+        }
+
+        return `${mapsUrl}${params}&key=${apiKey}`;
     }
 };

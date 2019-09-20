@@ -35,7 +35,7 @@ body {
     width: 100%;
 }
 
-.card {
+div.result {
     width: 16rem;
     margin: 5px;
 }
@@ -91,6 +91,15 @@ body {
 #logo {
     height: 50px;
     width: auto;
+}
+
+#price {
+    position: relative;
+    left: 3em;
+}
+#condition {
+    position: relative;
+    left: 1em;
 }
 
 @media screen and (max-width: 768px) {

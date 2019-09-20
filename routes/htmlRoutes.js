@@ -3,7 +3,9 @@ var helper = require('../business/helpers');
 var handlebars = require('handlebars');
 
 const resultsPartial = helper.getResultsTemplate();
+const mapPartial = helper.getMapFrameTemplate();
 handlebars.registerPartial('searchResults', resultsPartial);
+handlebars.registerPartial('mapFrame', mapPartial);
 
 module.exports = function(app) {
     // Load index page
@@ -30,7 +32,9 @@ module.exports = function(app) {
             where: searchCriteria
         }).then(listings => {
             res.render('listings', {
-                results: helper.formatListingObjects(listings),
+                data: {
+                    results: []
+                },
                 layout: 'main'
             });
         });
@@ -49,12 +53,18 @@ module.exports = function(app) {
                 .filterByDistance(listings, currentZip, maxDist)
                 .then(listings => {
                     const filtered = listings.filter(
-                        l => l.include && l.include === true
+                        l =>
+                            typeof l.include === 'undefined' ||
+                            l.include === true
                     );
 
+                    const context = helper.formatListingObjects(filtered);
                     const partial = handlebars.compile(resultsPartial);
                     const html = partial({
-                        results: helper.formatListingObjects(filtered),
+                        data: {
+                            results: context,
+                            zip: currentZip
+                        },
                         layout: 'results'
                     });
 
@@ -69,11 +79,19 @@ module.exports = function(app) {
     });
 
     app.get('/listings/:id', function(req, res) {
-        db.Listing.findOne({ where: { id: req.params.id } }).then(function(
-            data
-        ) {
+        const location = req.query.location;
+
+        db.Listing.findOne({ where: { id: req.params.id } }).then(data => {
+            const mapUrl = helper.buildMapSource(location, data.contactZip);
+
             return res.render('details', {
-                listing: data
+                listing: data,
+                directions: mapUrl.indexOf('directions') > 1,
+                mapSource: mapUrl,
+                zipSrc: location,
+                zipDest: data.contactZip,
+                priceUSD: `$${data.price.toFixed(2)}`,
+                condition: helper.getItemCondition(data.itemQuality)
             });
         });
 

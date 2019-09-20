@@ -27,8 +27,22 @@ function resetFilters() {
 // Add event listeners and perform necessary initializtion
 // once page content is loaded.
 document.addEventListener('DOMContentLoaded', () => {
-
     updateNavActiveItem('buy');
+
+    const location = getUserLocation();
+    if (location) {
+        fetch(`/listings/search?zipSrc=${location.zipcode}&distance=10`)
+            .then(response => {
+                return response.text();
+            })
+            .then(
+                html =>
+                    (document.querySelector('#search-results').innerHTML = html)
+            )
+            .catch(err => {
+                console.log('Error fetching search results: ', err);
+            });
+    }
 
     // Get distance slider and distOutput field
     const distSlider = document.querySelector('#range-distance');
@@ -36,7 +50,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Update the current distance value
     distSlider.addEventListener('input', function() {
-        const distLbl = this.value == 0 ? 'Any distance' : `Within ${this.value} miles`;
+        const distLbl =
+            this.value == 0 ? 'Any distance' : `Within ${this.value} miles`;
         distLabel.innerHTML = distLbl;
         Filters.distance = this.value;
     });
@@ -108,7 +123,7 @@ document.addEventListener('DOMContentLoaded', () => {
     filterBtn.addEventListener('click', function(evt) {
         // Prevent form submission
         evt.preventDefault();
-        searchListings()
+        searchListings();
     });
 
     // Reset filters button click
