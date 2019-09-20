@@ -2,7 +2,11 @@ module.exports = function(sequelize, DataTypes) {
     var Distance = sequelize.define(
         'Distance',
         {
-            zipcode: {
+            zipSrc: {
+                type: DataTypes.INTEGER,
+                primaryKey: true
+            },
+            zipDest: {
                 type: DataTypes.INTEGER,
                 primaryKey: true
             },
