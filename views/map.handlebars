@@ -1,8 +1,14 @@
-function initMap() {
+ <div id="map">
+</div>
+
+
+{{!-- Placed the code for the map here for now. Couldn't get it to work when trying to access the map.js file which has the same code --}}
+{{!-- <script>
+  function initMap() {
     // Position that map will be focued on, will need to change this to the zip the user inputs
     var myLatLng = { lat: 47.632530, lng: -122.153737 };
 
-    // Styles a map.
+    // Styles a map in night mode.
     var map = new google.maps.Map(document.getElementById('map'), {
         center: myLatLng,
         zoom: 11,
@@ -470,3 +476,10 @@ function initMap() {
         });
     }
 }
+</script> --}}
+{{!-- Link to Google Maps API --}}
+<script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=&callback=initMap" async
+  defer></script>
+
+  {{!-- <script src="/business/map.js"></script> --}}
