@@ -1,9 +1,25 @@
+function submitPost(Listing) {
+    $.post('/api/listings/', Listing, function(data) {
+        console.log(data);
+        alertify.alert(
+            'Item Posted',
+            'Thank you. our item has now been posted. Your seller ID is ' +
+                data +
+                '. Please save this ID for managing your item posting.',
+            function() {
+                alertify.success('ok');
+                window.location.href = '/';
+            }
+        );
+    });
+}
+
 $(document).ready(function() {
     // Update navbar active item to 'sell'
     updateNavActiveItem('sell');
 
     // Adding an event listener for when the form is submitted
-    $('.newItem').on('submit', function handleFormSubmit(event) {
+    $('.newItem').on('submit', function (event) {
         event.preventDefault();
 
         var checkBox;
@@ -63,22 +79,6 @@ $(document).ready(function() {
 
         console.log(newPost);
         submitPost(newPost);
-
-        function submitPost(Listing) {
-            $.post('/api/listings/', Listing, function(data) {
-                console.log(data);
-                alertify.alert(
-                    'Item Posted',
-                    'Thank you. our item has now been posted. Your seller ID is ' +
-                        data +
-                        '. Please save this ID for managing your item posting.',
-                    function() {
-                        alertify.success('ok');
-                        window.location.href = '/';
-                    }
-                );
-            });
-        }
     });
 
     // phone number formatting
@@ -110,8 +110,8 @@ $(document).ready(function() {
             console.log($('#newFreeItem').val());
             newPriceInput.classList.add('disabledinput');
         }
-        // else {
-        //  newPriceInput.classList.remove('disabledinput');
-        // }
+        else {
+         newPriceInput.classList.remove('disabledinput');
+        }
     });
 });
