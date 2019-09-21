@@ -6,7 +6,7 @@
 
   <title>Online Garage Sale</title>
 
-  <script src="https://code.jquery.com/jquery.js"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
   <script src="https://kit.fontawesome.com/622bde9dfc.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.11.4/build/alertify.min.js"></script>
@@ -36,13 +36,13 @@
                         <a class="navbar-brand d-inline-block" href="/"><img src="/images/logo4.png" id="logo"></a>
 
                         <ul class="navbar-nav mt-2 mt-lg-0 d-inline-flex">
-                            <li class="nav-item active">
+                            <li id="nav-buy" class="nav-item">
                                 <a class="nav-link" href="/listings">Buy</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/form">Sell</a>
+                            <li id="nav-sell" class="nav-item">
+                                <a class="nav-link" href="/sell">Sell</a>
                             </li>
-                            <li class="nav-item">
+                            <li id="nav-manage" class="nav-item">
                                 <a class="nav-link" href="/manage">Manage</a>
                             </li>
                         </ul>

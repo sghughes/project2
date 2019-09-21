@@ -1,4 +1,3 @@
-
 // Update nav active item
 function updateNavActiveItem(page) {
     const navItems = document.querySelectorAll('.nav-item');
@@ -12,6 +11,8 @@ function updateNavActiveItem(page) {
 
 // Display current location in navbar
 function updateCurrentLocation(location) {
+    sessionStorage.setItem('location', JSON.stringify(location));
+
     const locationElm = document.querySelector('#current-location');
     const locationName = document.querySelector('#location-name');
 
@@ -26,16 +27,15 @@ function updateCurrentLocation(location) {
 
 // Get the current location of the user.
 function getUserLocation() {
-
     // First check session storage
     const storedLocation = sessionStorage.getItem('location');
     try {
         const parsed = JSON.parse(storedLocation);
         if (parsed && parsed.name) {
             updateCurrentLocation(parsed);
-            return;
+            return parsed;
         }
-    } catch(err) {
+    } catch (err) {
         console.log('Error parsing location data from session storage', err);
     }
 
@@ -50,17 +50,19 @@ function getUserLocation() {
                     latitude: position.coords.latitude,
                     longitude: position.coords.longitude
                 };
-                sessionStorage.setItem('location', JSON.stringify(location));
-                fetch(`/api/locations/${location.latitude}/${location.longitude}`)
-                .then(response => {
-                    return response.json();
-                })
-                .then(data => {
-                    updateCurrentLocation(data);
-                })
-                .catch(err => {
-                    console.log('Error updating current location', err);
-                });
+
+                fetch(
+                    `/api/locations/${location.latitude}/${location.longitude}`
+                )
+                    .then(response => {
+                        return response.json();
+                    })
+                    .then(data => {
+                        updateCurrentLocation(data);
+                    })
+                    .catch(err => {
+                        console.log('Error updating current location', err);
+                    });
             },
             error => {
                 if (
@@ -80,7 +82,6 @@ function getUserLocation() {
 
 // Open a prompt to get user zip code
 function promptForZip() {
-
     // Prompt for valid zip code until given
     alertify
         .prompt()
@@ -141,13 +142,13 @@ function promptForZip() {
 }
 
 async function searchListings() {
-
     // Get search input
     const searchItem = document.querySelector('#input-search').value.trim();
 
-    // Check to see if filters are defined (from separate view).
-    // If found, append to API request query string
-    let searchParams = `?item=${searchItem}`;
+    const location = getUserLocation();
+
+    // Create the search parameter query string
+    let searchParams = `?item=${searchItem}&zipSrc=${location.zipcode}`;
     if (typeof Filters !== 'undefined') {
         Object.entries(Filters).forEach(([key, value]) => {
             searchParams += `&${key}=${value}`;

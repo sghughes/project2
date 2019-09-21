@@ -14,30 +14,95 @@
             </div>
         </div>
 
-        <div class="row d-flex text-center">
+        <div class="row text-center">
             <div class="col-md-12">
-                <h2 class="display-4 listing-title">{{ listing.title }}</h2>
+                <h2 class="display-5 listing-title">{{ listing.title }}</h2>
             </div>
         </div>
 
         <hr class="my-3">
 
-        <div class="row my-4">
-            <div class="col-md-6">
-                <h3 class="display-5">Item Description</h3>
-                <p>{{ listing.description }}</p>
-                <h2>TODO!!!</h2>
+        <div class="row my-3">
+
+            {{!-- Listing image column --}}
+            <div class="col-md-6 text-center">
+
+                {{!-- Listing image --}}
+                <img class="img-fluid listing-image rounded mb-3 w-100 h-auto" src="{{ listing.image }}" alt="item image">
+
             </div>
+
+            {{!-- Listing details column --}}
             <div class="col-md-6">
-                <img class="listing-image" src="{{ listing.image }}" alt="item image">
-                {{#if listing.isFree}}
-                    <h3 class="font-weight-bold">Free!</h3>
-                {{else}}
-                    <h3 class="font-weight-bold">${{ listing.price }}</h3>
-                {{/if}}
+
+                {{!-- Price/condition card --}}
+                <div class="card mb-3">
+                        <div class="card-body">
+                            {{#if listing.isFree}}
+                            <h3><strong>This item is free!</strong></h3>
+                            {{else}}
+                                <h3><strong>Price: </strong><span id="price">{{ priceUSD }}</span></h3>
+                            {{/if}}
+                            <h3><strong>Condition: </strong><span id="condition">{{ condition }}</span></h3>
+                        </div>
+                    </div>
+
+                    {{!-- Description card --}}
+                    <div class="card mb-3">
+                        <div class="card-header font-weight-bold">Description</div>
+                        <div class="card-body">
+                            {{ listing.description }}
+                        </div>
+                    </div>
+
+                    {{!-- Item details card --}}
+                    <div class="card">
+                        <div class="card-header font-weight-bold">Item Details</div>
+
+                        <ul class="list-group">
+
+                            {{#each listing.properties}}
+                                <li class="list-group-item text-capitalize"><strong>{{@key}}:</strong> {{this}}</li>
+                            {{/each}}
+                        </ul>
+                    </div>
+
+            </div>
+
+        </div>
+        <div class="row my-3">
+
+            {{!-- Seller info column --}}
+            <div class="col-md-4">
+
+                {{!-- Seller info card --}}
+                <div class="card mb-3">
+                    <div class="card-header font-weight-bold">Seller Info</div>
+                    <div class="card-body p-0">
+                        <div class="list-group">
+                            <li class="list-group-item"><strong>Email: </strong>{{ listing.contactEmail }}</li>
+                            <li class="list-group-item"><strong>Phone: </strong>
+                                {{#if listing.contactPhone}}
+                                    {{ listing.contactPhone }}
+                                {{else}}
+                                    Not Available
+                                {{/if}}
+                            </li>
+                            <li class="list-group-item"><strong>Zip code: </strong>{{ listing.contactZip }}</li>
+                            {{#if distance}}
+                                <li class="list-group-item"><strong>Distance: </strong>~{{ distance }} miles</li>
+                            {{/if}}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            {{!-- Google maps card (loaded from handlebars partial) --}}
+            <div class="col-md-8">
+                {{> mapFrame}}
             </div>
         </div>
 
   </div>
-
 </div>
