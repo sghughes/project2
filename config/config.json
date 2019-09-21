@@ -1,17 +1,29 @@
 {
-  "development": {
-    "database": "ogs_db",
-    "host": "localhost",
-    "dialect": "mysql"
-  },
-  "test": {
-    "database": "obs_test_db",
-    "host": "localhost",
-    "dialect": "mysql",
-    "logging": false
-  },
-  "production": {
-    "use_env_variable": "JAWSDB_URL",
-    "dialect": "mysql"
-  }
+    "development": {
+        "database": "ogs_db",
+        "host": "localhost",
+        "dialect": "mysql",
+        "pool": {
+            "max": 100,
+            "min": 0,
+            "acquire": 30000,
+            "idle": 10000
+        }
+    },
+    "test": {
+        "database": "obs_test_db",
+        "host": "localhost",
+        "dialect": "mysql",
+        "logging": false
+    },
+    "production": {
+        "use_env_variable": "JAWSDB_URL",
+        "dialect": "mysql",
+        "pool": {
+            "max": 100,
+            "min": 0,
+            "acquire": 30000,
+            "idle": 10000
+        }
+    }
 }
