@@ -142,27 +142,56 @@ function promptForZip() {
 }
 
 async function searchListings() {
-    // Get search input
+    // Get search input and location
     const searchItem = document.querySelector('#input-search').value.trim();
-
     const location = getUserLocation();
 
     // Create the search parameter query string
-    let searchParams = `?item=${searchItem}&zipSrc=${location.zipcode}`;
+    let searchParams = [];
+    if (searchItem && searchItem !== '') {
+        searchParams.push(`item=${searchItem}`);
+    }
+    if (location) {
+        searchParams.push(`zipSrc=${location.zipcode}`);
+    }
     if (typeof Filters !== 'undefined') {
         Object.entries(Filters).forEach(([key, value]) => {
-            searchParams += `&${key}=${value}`;
+            searchParams.push(`${key}=${value}`);
         });
+    }
+
+    let paramString = searchParams.join('&');
+    if (paramString.length > 0) {
+        paramString = '?' + paramString;
+    }
+
+    // If performing a search from a different view, then
+    // redirect to listings view
+    if (window.location.pathname !== '/listings') {
+        window.location.assign('/listings' + paramString);
+        return;
     }
 
     // Perform GET request to find matching listings
     try {
-        const response = await fetch('/listings/search' + searchParams);
+        const response = await fetch('/listings/search' + paramString);
         const text = await response.text();
+
         document.querySelector('#search-results').innerHTML = text;
     } catch (err) {
-        console.log('ERROR searching for listings', err, searchParams);
+        console.log('ERROR searching for listings', err, paramString);
     }
+}
+
+function searchHandler(evt) {
+    evt.preventDefault();
+    searchListings();
+}
+
+function getQueryVariable(variable) {
+	const query = window.location.search.substring(1);
+    const pair = query.split("&").find(v => v.includes(variable));
+    return pair ? pair.split('=')[1] : false;
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -171,9 +200,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Search button click event handler
     const searchButton = document.querySelector('#btn-search');
-    searchButton.addEventListener('click', evt => {
-        // Prevent form submission
-        evt.preventDefault();
-        searchListings();
-    });
+    searchButton.addEventListener('click', evt => searchHandler(evt));
 });

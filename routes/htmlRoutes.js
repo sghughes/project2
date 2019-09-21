@@ -33,7 +33,7 @@ module.exports = function(app) {
         }).then(listings => {
             res.render('listings', {
                 data: {
-                    results: []
+                    results: listings
                 },
                 layout: 'main'
             });
