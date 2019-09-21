@@ -79,20 +79,34 @@ module.exports = function(app) {
     });
 
     app.get('/listings/:id', function(req, res) {
-        const location = req.query.location;
+        const location = parseInt(req.query.location);
 
         db.Listing.findOne({ where: { id: req.params.id } }).then(data => {
             const mapUrl = helper.buildMapSource(location, data.contactZip);
 
-            return res.render('details', {
-                listing: data,
-                directions: mapUrl.indexOf('directions') > 1,
-                mapSource: mapUrl,
-                zipSrc: location,
-                zipDest: data.contactZip,
-                priceUSD: `$${data.price.toFixed(2)}`,
-                condition: helper.getItemCondition(data.itemQuality)
-            });
+            const renderListing = (res, data, location, dist) => {
+                res.render('details', {
+                    listing: data,
+                    directions: mapUrl.indexOf('directions') > 1,
+                    mapSource: mapUrl,
+                    zipSrc: location,
+                    zipDest: data.contactZip,
+                    priceUSD: `$${data.price.toFixed(2)}`,
+                    condition: helper.getItemCondition(data.itemQuality),
+                    distance: dist ? dist.milesValue.toFixed(1) : ''
+                });
+            }
+
+            if (location && data.contactZip) {
+                helper.getDistanceBetween(location, data.contactZip)
+                .then(distData => renderListing(res, data, location, distData))
+                .catch(err => {
+                    console.log('Could not look up distance information.', err);
+                });
+            } else {
+                renderListing(res, data, location)
+            }
+            return;
         });
 
         // Render 404 page for any unmatched routes
