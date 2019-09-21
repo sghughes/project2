@@ -1,25 +1,48 @@
 function submitPost(Listing) {
-    $.post('/api/listings/', Listing, function(data) {
-        console.log(data);
+    // First make sure zip code is valid
+    const zipcode = $('#newItemZipCode')
+        .val()
+        .trim();
+    $.get(`/api/locations/${zipcode}`, function() {
+        // Zip code found, continue with new listing post
+        $.post('/api/listings/', Listing, function(data) {
+            // Create alert to notify seller with their ID
+            alertify.alert(
+                'Item Posted',
+                'Thank you. our item has now been posted. Your seller ID is ' +
+                    data +
+                    '. Please save this ID for managing your item posting.',
+                function() {
+                    alertify.success('Listing Created');
+                    window.location.href = '/';
+                }
+            );
+        }).fail(function(response) {
+            console.log(response);
+            alertify.alert('Post Failed',
+                'Could not post item. Message: ' + response,
+                function() {
+                    alertify.error('Error encountered');
+                }
+            );
+        });
+    }).fail(function() {
         alertify.alert(
-            'Item Posted',
-            'Thank you. our item has now been posted. Your seller ID is ' +
-                data +
-                '. Please save this ID for managing your item posting.',
+            'Invalid Zip Code',
+            `${zipcode} is not a valid zip code. Please try again.`,
             function() {
-                alertify.success('ok');
-                window.location.href = '/';
+                alertify.error('Error encountered');
             }
         );
     });
 }
 
-$(document).ready(function() {
+document.addEventListener('DOMContentLoaded', () => {
     // Update navbar active item to 'sell'
     updateNavActiveItem('sell');
 
     // Adding an event listener for when the form is submitted
-    $('.newItem').on('submit', function (event) {
+    $('.newItem').on('submit', function(event) {
         event.preventDefault();
 
         var checkBox;
@@ -77,7 +100,6 @@ $(document).ready(function() {
                 .trim()
         };
 
-        console.log(newPost);
         submitPost(newPost);
     });
 
@@ -101,17 +123,13 @@ $(document).ready(function() {
     });
 
     // Free only checkbox
-    //  const freeCheckbox = document.querySelector('#newIsFree');
     $('#newFreeItem').on('click', function() {
-        console.log('clicked1');
-        var check = $(this).prop('checked');
-        if (check == true) {
-            $('#newFreeItem').val(true);
-            console.log($('#newFreeItem').val());
-            newPriceInput.classList.add('disabledinput');
-        }
-        else {
-         newPriceInput.classList.remove('disabledinput');
+        var checked = $(this).prop('checked');
+        if (checked === true) {
+            $('#newPriceInput').addClass('disabledinput');
+            $('#newItemPrice').val(0);
+        } else {
+            $('#newPriceInput').removeClass('disabledinput');
         }
     });
 });

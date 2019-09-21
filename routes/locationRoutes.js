@@ -40,7 +40,7 @@ module.exports = function(app) {
                             return;
                         } else if (response.json.results.length === 0) {
                             res.status(404).send(
-                                `Geocode lookup failed for zipcode ${zipcode}`
+                                `Invalid zip code ${zipcode}`
                             );
                             return;
                         }
@@ -69,7 +69,7 @@ module.exports = function(app) {
                     .catch(err => {
                         console.log(err);
                         res.status(500).send(
-                            'Error processing google maps geocode request.'
+                            'Error processing location lookup.'
                         );
                     });
             }
