@@ -33,7 +33,7 @@ module.exports = function(app) {
         }).then(listings => {
             res.render('listings', {
                 data: {
-                    results: listings
+                    results: []
                 },
                 layout: 'main'
             });
@@ -95,16 +95,22 @@ module.exports = function(app) {
                     condition: helper.getItemCondition(data.itemQuality),
                     distance: dist ? dist.milesValue.toFixed(1) : ''
                 });
-            }
+            };
 
             if (location && data.contactZip) {
-                helper.getDistanceBetween(location, data.contactZip)
-                .then(distData => renderListing(res, data, location, distData))
-                .catch(err => {
-                    console.log('Could not look up distance information.', err);
-                });
+                helper
+                    .getDistanceBetween(location, data.contactZip)
+                    .then(distData =>
+                        renderListing(res, data, location, distData)
+                    )
+                    .catch(err => {
+                        console.log(
+                            'Could not look up distance information.',
+                            err
+                        );
+                    });
             } else {
-                renderListing(res, data, location)
+                renderListing(res, data, location);
             }
             return;
         });
