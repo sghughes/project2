@@ -25,10 +25,10 @@
         <div class="row my-3">
 
             {{!-- Listing image column --}}
-            <div class="col-md-6">
+            <div class="col-md-6 text-center">
 
                 {{!-- Listing image --}}
-                <img class="img-fluid listing-image rounded" src="{{ listing.image }}" alt="item image">
+                <img class="img-fluid listing-image rounded mb-3 w-100 h-auto" src="{{ listing.image }}" alt="item image">
 
             </div>
 
@@ -89,6 +89,9 @@
                                 {{/if}}
                             </li>
                             <li class="list-group-item"><strong>Zip code: </strong>{{ listing.contactZip }}</li>
+                            {{#if distance}}
+                                <li class="list-group-item"><strong>Distance: </strong>~{{ distance }} miles</li>
+                            {{/if}}
                         </div>
                     </div>
                 </div>

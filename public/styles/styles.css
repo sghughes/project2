@@ -79,11 +79,6 @@ div.result {
     cursor: pointer;
 }
 
-.listing-image {
-    max-height: 500px;
-    width: auto;
-}
-
 .listing-title {
     text-transform: capitalize;
 }
