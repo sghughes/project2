@@ -46,6 +46,6 @@ VALUES ('free angry shorts','These shorts are just too angry to hold onto...','h
 ('free vintage jean skirt', 'Channel your inner Madonna and buy this gently used skirt today (snap bracelets not included).', 'https://i.imgur.com/iAzS7tg.jpg', 3, '{"color": "blue", "size": "l", "type": "skirts","gender":"womens"}', true, 98101, 'punkrawkgirl88@gmail.com', 'clothing', CURRENT_DATE, CURRENT_DATE),
 ('Work our tshirts','3 very nice workout shirts that I no longer need/want. They are yours for free if you want them.','https://i.imgur.com/ai8RVX0.jpg', 2, '{"color": "other", "size":"xl","type":"shirts","gender":"womens"}', true, 98201, 'panther18@gmail.com', 'clothing', CURRENT_DATE, CURRENT_DATE);
 
-
-
-
+-- Distance seed data
+insert into distances (zipSrc,zipDest,milesText,milesValue,createdAt,updatedAt)
+values (98052,99901,"674 mls",674.238,CURRENT_DATE,CURRENT_DATE);

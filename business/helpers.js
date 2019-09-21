@@ -79,11 +79,16 @@ module.exports = {
                 priceCond += ` - ${QUALITY[listing.itemQuality]}`;
             }
 
+            const descPreview =
+                listing.description.length > 80
+                    ? listing.description.substring(0, 77) + '...'
+                    : listing.description;
+
             return {
                 id: listing.id,
                 title: title,
                 image: listing.image,
-                description: listing.description,
+                description: descPreview,
                 isFree: listing.isFree,
                 price: priceCond,
                 created: `Listed ${moment(listing.createdAt).fromNow()}`,
@@ -152,50 +157,67 @@ module.exports = {
                         zipDest: zipDest
                     }
                 }
-            }).then(data => {
-                if (data) {
-                    resolve(data);
-                    return;
-                }
+            })
+                .then(data => {
+                    if (data) {
+                        resolve(data);
+                        return;
+                    }
 
-                // Look up distance info from google maps api
-                mapsClient
-                    .distanceMatrix({
-                        origins: zipSrc,
-                        destinations: zipDest,
-                        units: 'imperial'
-                    })
-                    .asPromise()
-                    .then(data => {
-                        const dist = data.json.rows[0].elements[0].distance;
-                        const miles = parseFloat(dist.value) / 1609.344;
-                        const milesText = dist.text.trim();
+                    // Look up distance info from google maps api
+                    mapsClient
+                        .distanceMatrix({
+                            origins: zipSrc,
+                            destinations: zipDest,
+                            units: 'imperial'
+                        })
+                        .asPromise()
+                        .then(data => {
+                            const element = data.json.rows[0].elements[0];
+                            if (!element || element.status === 'ZERO_RESULTS') {
+                                reject(`ZERO RESULTS (DISTANCE): ${zipSrc},${zipDest}`);
+                                return;
+                            }
 
-                        const distanceInfo = {
-                            zipSrc: zipSrc,
-                            zipDest: zipDest,
-                            milesText: milesText,
-                            milesValue: miles
-                        };
+                            const dist = element.distance;
+                            const miles = parseFloat(dist.value) / 1609.344;
+                            const milesText = dist.text.trim();
 
-                        db.Distance.findOrCreate({
-                            where: {
-                                [db.Op.and]: {
-                                    zipSrc: zipSrc,
-                                    zipDest: zipDest
-                                }
-                            },
-                            defaults: {
+                            const distanceInfo = {
                                 zipSrc: zipSrc,
                                 zipDest: zipDest,
-                                milesText: distanceInfo.milesText,
-                                milesValue: distanceInfo.milesValue
-                            }
-                        }).then(() => {
-                            resolve(distanceInfo);
+                                milesText: milesText,
+                                milesValue: miles
+                            };
+
+                            db.Distance.findOrCreate({
+                                where: {
+                                    [db.Op.and]: {
+                                        zipSrc: zipSrc,
+                                        zipDest: zipDest
+                                    }
+                                },
+                                defaults: {
+                                    zipSrc: zipSrc,
+                                    zipDest: zipDest,
+                                    milesText: distanceInfo.milesText,
+                                    milesValue: distanceInfo.milesValue
+                                }
+                            }).then(() => {
+                                resolve(distanceInfo);
+                            }).catch(err => {
+                                console.log('DB ERROR: ', err);
+                            });
+                        })
+                        .catch(err => {
+                            console.log('MAPS CLIENT ERROR: ', err);
                         });
-                    });
-            });
+                })
+                .catch(err => {
+                    console.log('MAPS CLIENT ERROR: ', err);
+                });
+        }).catch(err => {
+            console.log('DISTANCE ERROR: ', err);
         });
     },
     filterByDistance: function(listings, zip, maxDist) {
@@ -204,6 +226,9 @@ module.exports = {
                 new Promise((res, rej) => {
                     this.getDistanceBetween(zip, listing.contactZip).then(
                         distData => {
+                            if (!distData) {
+                                rej({listing, 'okay': false});
+                            }
                             let inRange = distData.milesValue <= maxDist;
                             listing.include = maxDist === 0 || inRange;
                             listing.miles = distData.milesValue.toFixed(1);
@@ -213,7 +238,7 @@ module.exports = {
                 })
         );
 
-        return Promise.all(promises);
+        return Promise.all(promises).catch(err => {console.log(err)});
     },
     buildMapSource(fromZip, toZip) {
         const apiKey = process.env.GMAPS_KEY;
