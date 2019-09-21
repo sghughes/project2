@@ -1,29 +1,26 @@
-  <div id="managePage">
+<div id="managePage">
 
-    <div class="jumbotron big-banner">
-        <div id="banner-text" class="dim">
-          <h1 class="display-4 text-center">ONLINE GARAGE SALE!</h1>
-          <p class="lead text-center">Find a bargain in your neighborhood</p>
-        </div>
-    </div>
+  <div class="jumbotron big-banner">
+      <div id="banner-text" class="dim">
+        <h1 class="display-4 text-center">ONLINE GARAGE SALE!</h1>
+        <p class="lead text-center mobile-hidden">Find a bargain in your neighborhood</p>
+      </div>
+  </div>
 
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <h2 class="text-center">Enter item ID to remove post</h2>
-          <form>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
 
-            <div class="form-group">
-              <label for="formGroupExampleInput">Item Posting ID</label>
-              <input type="text" class="form-control" id="itemPostingID" placeholder="itemID">
-            </div>
+        <h2 class="text-center">Enter unique Seller ID to remove listing</h2>
 
-            <button type="button" class="btn btn-primary" id="manageButton">Mark Item Sold</button>
+        <form class="text-center my-4">
+            <input type="text" class="form-control form-control-lg px-5 text-center" id="itemPostingID" placeholder="Enter Seller ID here">
+            <button type="button" class="btn btn-danger btn-lg my-3" id="manageButton">Remove Listing</button>
+        </form>
 
-          </form>
-        </div>
       </div>
     </div>
   </div>
+</div>
 
-  <script src="/js/manage.js"></script>
+<script src="/js/manage.js"></script>

@@ -9,9 +9,9 @@ function submitPost(Listing) {
             // Create alert to notify seller with their ID
             alertify.alert(
                 'Item Posted',
-                'Thank you. our item has now been posted. Your seller ID is ' +
+                'Thank you. our item has now been posted. Your Seller ID is ' +
                     data +
-                    '. Please save this ID for managing your item posting.',
+                    '. Please save this ID for managing your item listing.',
                 function() {
                     alertify.success('Listing Created');
                     window.location.href = '/';
