@@ -29,9 +29,16 @@ function resetFilters() {
 document.addEventListener('DOMContentLoaded', () => {
     updateNavActiveItem('buy');
 
+    // Check for passed url parameters
+    let item = getQueryVariable('item');
+
     const location = getUserLocation();
     if (location) {
-        fetch(`/listings/search?zipSrc=${location.zipcode}&distance=10`)
+        let queryString = `zipSrc=${location.zipcode}&distance=10`;
+        if (item) {
+            queryString += `&item=${item}`
+        }
+        fetch(`/listings/search?${queryString}`)
             .then(response => {
                 return response.text();
             })
@@ -63,14 +70,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Min price input
     minPrice.addEventListener('input', function() {
-        // TODO - add try/catch
         const min = parseFloat(this.value);
         Filters.minPrice = min;
     });
 
     // Max price input
     maxPrice.addEventListener('input', function() {
-        // TODO - add try/catch
         const max = parseFloat(this.value);
         Filters.maxPrice = max;
     });
@@ -118,13 +123,9 @@ document.addEventListener('DOMContentLoaded', () => {
         Filters.itemQuality = parseInt(this.value);
     });
 
-    // Filter button click
-    const filterBtn = document.querySelector('#btn-filter');
-    filterBtn.addEventListener('click', function(evt) {
-        // Prevent form submission
-        evt.preventDefault();
-        searchListings();
-    });
+    // Filter button handler
+    const filterButton = document.querySelector('#btn-filter');
+    filterButton.addEventListener('click', evt => searchHandler(evt));
 
     // Reset filters button click
     const resetBtn = document.querySelector('#btn-reset');
@@ -133,10 +134,18 @@ document.addEventListener('DOMContentLoaded', () => {
         evt.preventDefault();
         // Reset Filters
         resetFilters();
+        distLabel.innerHTML = Filters.distance;
         // Reset filters form
         const filtersForm = document.querySelector('#filters');
         filtersForm.reset();
         // Make sure price input enabled
         priceInputs.classList.remove('disabledinput');
+    });
+
+    $(window).keydown(function(evt){
+        if(event.keyCode == 13) {
+          searchHandler(evt)
+          return false;
+        }
     });
 });

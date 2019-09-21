@@ -8,116 +8,139 @@
   <div class="container">
     <div class="row">
       <div class="col-md-12">
+
         <h2 class="text-center">Sell Your Item!</h2>
-        <form class="newItem" action="/api/listings" method="POST">
 
-          <div class="form-group">
-            <label for="exampleFormControlInput1">Email address</label>
-            <input type="email" class="form-control" id="email" placeholder="name@example.com" name="contactEmail" required>
+        <br class="my-3">
+
+        <form class="newItem mb-5" action="/api/listings" method="POST">
+
+          <div class="container-fluid">
+
+            <div class="row">
+
+              <div class="col-md-6">
+
+                  <div class="form-group">
+                    <label for="itemName">Item Name</label>
+                    <input type="title" class="form-control" id="newItemTitle" placeholder="Item Name" name="title" required>
+                  </div>
+
+                  <div class="form-check mb-3">
+                    <input class="form-check-input" type="checkbox" id="newFreeItem" value=false>
+                    <label class="form-check-label" for="freeItem">
+                        Give item away (free)
+                    </label>
+                  </div>
+
+                  <div class="form-group" id='newPriceInput'>
+                    <label for="newPriceInput">Price</label>
+                    <input type="number" step=".01" class="form-control" id="newItemPrice" placeholder="Price" name="price" pattern="[0-9]*" value=0>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="gender">Mens or Womens</label>
+                    <select class="form-control" id="newItemGender" required>
+                      <option value='na'>N/A</option>
+                      <option value='mens'>Mens</option>
+                      <option value='womens'>Womens</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="exampleFormControlSelect1">Clothing Type</label>
+                    <select class="form-control" id="newItemClothingType" name="item" required>
+                        <option value='shirt'>Shirt</option>
+                        <option value='pants'>Pants</option>
+                        <option value='shorts'>Shorts</option>
+                        <option value='skirt'>Skirt</option>
+                        <option value='sweater'>Sweater</option>
+                        <option value='coat'>Coat</option>
+                        <option value='dress'>Dress</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="select-size">Size</label>
+                      <select class="form-control" id="newItemSize" required>
+                        <option value='xs'>XS</option>
+                        <option value='s'>S</option>
+                        <option value='m'>M</option>
+                        <option value='l'>L</option>
+                        <option value='xl'>XL</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="exampleFormControlSelect1">Color</label>
+                    <select class="form-control" id="newItemColor" required>
+                      <option value="black">Black</option>
+                      <option value='white'>White</option>
+                      <option value='blue'>Blue</option>
+                      <option value='red'>Red</option>
+                      <option value='green'>Green</option>
+                      <option value='yellow'>Yellow</option>
+                      <option value='brown'>Brown</option>
+                      <option value='purple'>Purple</option>
+                      <option value='orange'>Orange</option>
+                      <option value='tan'>Tan</option>
+                      <option value='pink'>Pink</option>
+                      <option value='other'>Other</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="exampleFormControlSelect1">Item Quality</label>
+                    <select class="form-control" id="itemQuality" required>
+                        <option value="1">New</option>
+                        <option value="2">Great</option>
+                        <option value="3">Used</option>
+                        <option value="4">Worn</option>
+                        <option value="5">Damaged</option>
+                    </select>
+                  </div>
+
+               </div>
+
+               <div class="col-md-6">
+
+                  <div class="form-group">
+                      <label for="exampleFormControlInput1">Image</label>
+                      <input type="url" class="form-control" id="newItemImageUrl" placeholder="Image URL" name="image" required>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="exampleFormControlTextarea1">Item Description (optional)</label>
+                      <textarea class="form-control" id="newItemDescription" rows="3" name="description"></textarea>
+                    </div>
+
+                  <div class="form-group">
+                    <label for="exampleFormControlInput1">Email address</label>
+                    <input type="email" class="form-control" id="email" placeholder="name@example.com" name="contactEmail" required>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="text" class="form-control bfh-phone" id="phone" placeholder="(555) 555-5555" name="contactPhone" required>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="newItemZipCode">Zip code</label>
+                    <input type="text" class="form-control" id="newItemZipCode" placeholder="Zip Code" name="contactZip" pattern="[0-9]*" minlength=5 maxlength=5 required>
+                  </div>
+
+              </div>
+            </div>
+
+            <div class="row my-3">
+                <div class="col text-center">
+
+                    <button id="btn-sell" type="submit" class="btn btn-primary btn-lg px-5">Submit</button>
+
+                </div>
+            </div>
+
           </div>
-
-          <div class="form-group">
-            <label for="phone">Phone Number</label>
-            <input type="text" class="form-control bfh-phone" id="phone" placeholder="(555)555-5555" name="contactPhone" required>
-          </div>
-
-
-          <div class="form-group">
-            <label for="itemName">Item Name</label>
-            <input type="title" class="form-control" id="newItemTitle" placeholder="Item Name" name="title" required>
-          </div>
-
-          <div class="form-group">
-            <label for="newItemZipCode">Zip code</label>
-            <input type="text" class="form-control" id="newItemZipCode" placeholder="Zip Code" name="contactZip" pattern="[0-9]*" minlength=5 maxlength=5 required>
-          </div>
-
-          <div class="form-check mb-3">
-            <input class="form-check-input" type="checkbox" id="newFreeItem" value=false>
-            <label class="form-check-label" for="freeItem">
-                Give item away (free)
-            </label>
-          </div>
-
-
-          <div class="form-group" id='newPriceInput'>
-            <label for="newPriceInput">Price</label>
-            <input type="number" step=".01" class="form-control" id="newItemPrice" placeholder="Price" name="price" pattern="[0-9]*" value=0>
-          </div>
-
-          <div class="form-group">
-            <label for="gender">Mens or Womens</label>
-            <select class="form-control" id="newItemGender" required>
-              <option value='na'>N/A</option>
-              <option value='mens'>Mens</option>
-              <option value='womens'>Womens</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="exampleFormControlSelect1">Clothing Type</label>
-            <select class="form-control" id="newItemClothingType" name="item" required>
-                <option value='shirt'>Shirt</option>
-                <option value='pants'>Pants</option>
-                <option value='shorts'>Shorts</option>
-                <option value='skirt'>Skirt</option>
-                <option value='sweater'>Sweater</option>
-                <option value='coat'>Coat</option>
-                <option value='dress'>Dress</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="select-size">Size</label>
-              <select class="form-control" id="newItemSize" required>
-                <option value='xs'>XS</option>
-                <option value='s'>S</option>
-                <option value='m'>M</option>
-                <option value='l'>L</option>
-                <option value='xl'>XL</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="exampleFormControlSelect1">Color</label>
-            <select class="form-control" id="newItemColor" required>
-              <option value="black">Black</option>
-              <option value='white'>White</option>
-              <option value='blue'>Blue</option>
-              <option value='red'>Red</option>
-              <option value='green'>Green</option>
-              <option value='yellow'>Yellow</option>
-              <option value='brown'>Brown</option>
-              <option value='purple'>Purple</option>
-              <option value='orange'>Orange</option>
-              <option value='tan'>Tan</option>
-              <option value='pink'>Pink</option>
-              <option value='other'>Other</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="exampleFormControlSelect1">Item Quality</label>
-            <select class="form-control" id="itemQuality" required>
-                <option value="1">New</option>
-                <option value="2">Great</option>
-                <option value="3">Used</option>
-                <option value="4">Worn</option>
-                <option value="5">Damaged</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="exampleFormControlInput1">Image</label>
-            <input type="url" class="form-control" id="newItemImageUrl" placeholder="Image URL" name="image" required>
-          </div>
-
-          <div class="form-group">
-            <label for="exampleFormControlTextarea1">Item Description (optional)</label>
-            <textarea class="form-control" id="newItemDescription" rows="3" name="description"></textarea>
-          </div>
-
-          <button type="submit" class="btn btn-primary">Submit</button>
 
         </form>
       </div>

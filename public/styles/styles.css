@@ -40,6 +40,11 @@ div.result {
     margin: 5px;
 }
 
+.free {
+    color: green;
+    font-weight: bold;
+}
+
 .listing-card {
     margin: 0;
     padding: 0;

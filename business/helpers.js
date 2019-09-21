@@ -102,7 +102,7 @@ module.exports = {
     },
     getResultsTemplate: function() {
         return `{{#each data.results}}
-                    <a href="/listings/{{ id }}?location={{ ../data.zip }}" class="listing-card">
+                    <a href="/listings/{{ id }}?location={{ ../data.zip }}" class="listing-card rounded">
                         <div class="card result">
                             <h5 class="card-header text-capitalize">{{ title }}</h5>
                             <img src="{{ image }}" onerror="this.src='/images/default.jpg';" alt="listing image" class="card-img-top">
