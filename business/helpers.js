@@ -149,6 +149,16 @@ module.exports = {
                 return;
             }
 
+            // Save us some work if source and dest are the same...
+            if (zipSrc === zipDest) {
+                resolve({
+                    zipSrc: zipSrc,
+                    zipDest: zipDest,
+                    milesText: '0 mls',
+                    milesValue: 0
+                });
+            }
+
             // First check Distance table for information
             db.Distance.findOne({
                 where: {
