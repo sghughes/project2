@@ -5,16 +5,36 @@
 body {
     font-family: 'Source Sans Pro', sans-serif;
 }
+
 .big-banner {
+    position: relative;
     background-image: url(/images/banner.jpg);
-    /* background-size: 100%; */
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
     color: #fff;
     font-weight: bolder;
-    /* font-family: 'Source Sans Pro', sans-serif; */
-    font-family: 'Shadows Into Light', cursive;
+    font-family: 'Shadows Into Light', cursive, 'Segoe UI', sans-serif;
+    padding-left: 0;
+    padding-right: 0;
+    text-align: center;
+}
+
+.dim {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 2rem;
+    width: 50%;
+    padding: 1rem;
+    position: relative;
+}
+
+#banner-text {
+    position: relative;
+    display: inline-block;
+    top: 2.5rem;
+}
+#banner-text p {
+    margin: 0;
 }
 
 #search-form {
@@ -27,8 +47,19 @@ body {
 
 .buyButton,
 .sellButton {
-    margin: 3px;
+    position: relative;
+    margin: 5px;
+    padding: 0.5rem 2rem;
+    top: 3rem;
+    font-weight: bold;
+    transition: 200ms linear;
 }
+
+.buyButton:hover,
+.sellButton:hover {
+    background-color: rgb(41, 43, 44);
+    color: rgb(247, 247, 247);
+};
 
 #map {
     height: 500px;
@@ -57,7 +88,7 @@ body {
 .listing-card:hover {
     text-decoration: none;
     text-transform: none;
-    background-color: rgba(0,0,255,0.1);
+    background-color: rgba(41,43,44,0.8);
 }
 
 .listing-time {
@@ -73,6 +104,7 @@ body {
     width: 100%;
     height: 20vh;
     object-fit: cover;
+    object-position: top;
 }
 
 .disabledinput {
@@ -83,6 +115,11 @@ body {
 .hiddeninput {
     pointer-events: none;
     opacity: 0;
+}
+
+.nav-link {
+    font-weight: bold;
+    transition: 200ms linear;
 }
 
 .nav-link:hover {
