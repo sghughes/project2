@@ -9,14 +9,14 @@
     <div class="container">
 
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-1">
                 <a href="/listings"><button class="btn btn-danger px-4">Back</button></a>
             </div>
-        </div>
-
-        <div class="row text-center">
-            <div class="col-md-12">
-                <h2 class="display-5 listing-title">{{ listing.title }}</h2>
+            <div class="col text-center">
+                 <h2 class="display-5 listing-title">{{ listing.title }}</h2>
+            </div>
+            <div class="col-md-1">
+                {{!-- Just a placeholder --}}
             </div>
         </div>
 
@@ -36,11 +36,13 @@
                 {{!-- Price/condition card --}}
                 <div class="card mb-3">
                         <div class="card-body">
+
                             {{#if listing.isFree}}
-                            <h3><strong>This item is free!</strong></h3>
+                                <h3><strong>Price: </strong><span id="price" class="free">FREE!</span></h3>
                             {{else}}
                                 <h3><strong>Price: </strong><span id="price">{{ priceUSD }}</span></h3>
                             {{/if}}
+
                             <h3><strong>Condition: </strong><span id="condition">{{ condition }}</span></h3>
                         </div>
                     </div>
