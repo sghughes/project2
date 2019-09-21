@@ -112,13 +112,11 @@ $(document).ready(function() {
        $('#newFreeItem').val(true);
        console.log($('#newFreeItem').val());
        newPriceInput.classList.add('disabledinput');
-
     } 
-    // else {
-    //  newPriceInput.classList.remove('disabledinput');
-    // }
+    else {
+      $('#newFreeItem').val(false);
+     newPriceInput.classList.remove('disabledinput');
+    }
   });
-
-
 
 });
