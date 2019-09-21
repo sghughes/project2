@@ -52,13 +52,18 @@ module.exports = function(app) {
             helper
                 .filterByDistance(listings, currentZip, maxDist)
                 .then(listings => {
-                    const filtered = listings.filter(
-                        l =>
-                            typeof l.include === 'undefined' ||
-                            l.include === true
-                    );
 
-                    const context = helper.formatListingObjects(filtered);
+                    let context = {};
+
+                    if (listings && listings.length > 0) {
+                        const filtered = listings.filter(
+                            l =>
+                                typeof l.include === 'undefined' ||
+                                l.include === true
+                        );
+                        context = helper.formatListingObjects(filtered);
+                    }
+
                     const partial = handlebars.compile(resultsPartial);
                     const html = partial({
                         data: {

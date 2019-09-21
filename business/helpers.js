@@ -236,8 +236,9 @@ module.exports = {
                 new Promise((res, rej) => {
                     this.getDistanceBetween(zip, listing.contactZip).then(
                         distData => {
-                            if (!distData) {
+                            if (!distData||typeof distData.milesValue === 'undefined') {
                                 rej({listing, 'okay': false});
+                                return;
                             }
                             let inRange = distData.milesValue <= maxDist;
                             listing.include = maxDist === 0 || inRange;
