@@ -35,9 +35,10 @@ body {
     width: 100%;
 }
 
-div.result {
+.result {
     width: 16rem;
     margin: 5px;
+    height: 420px;
 }
 
 .free {
@@ -62,6 +63,10 @@ div.result {
 .listing-time {
     position: absolute;
     bottom: 0;
+}
+
+.card {
+    overflow: hidden;
 }
 
 .card-img-top {
@@ -104,6 +109,18 @@ div.result {
 
 @media screen and (max-width: 768px) {
     #logo {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .card {
+        width: 100%;
+    }
+    .card-text {
+        word-wrap: break-word;
+    }
+    .listing-time {
         display: none;
     }
 }
