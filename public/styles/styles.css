@@ -57,7 +57,7 @@ body {
 .listing-card:hover {
     text-decoration: none;
     text-transform: none;
-    background-color: lightblue;
+    background-color: rgba(0,0,255,0.1);
 }
 
 .listing-time {
