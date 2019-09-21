@@ -26,10 +26,8 @@
 
             {{!-- Listing image column --}}
             <div class="col-md-6 text-center">
-
                 {{!-- Listing image --}}
-                <img class="img-fluid listing-image rounded mb-3 w-100 h-auto" src="{{ listing.image }}" alt="item image">
-
+                <img class="img-fluid listing-image rounded mb-3 w-100 h-auto" src="{{ listing.image }}" onerror="this.src='/images/default.jpg';" alt="item image">
             </div>
 
             {{!-- Listing details column --}}

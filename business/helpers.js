@@ -105,7 +105,7 @@ module.exports = {
                     <a href="/listings/{{ id }}?location={{ ../data.zip }}" class="listing-card">
                         <div class="card result">
                             <h5 class="card-header text-capitalize">{{ title }}</h5>
-                            <img src="{{ image }}" alt="listing image" class="card-img-top">
+                            <img src="{{ image }}" onerror="this.src='/images/default.jpg';" alt="listing image" class="card-img-top">
                             <div class="card-body">
 
                                 {{#if isFree}}
